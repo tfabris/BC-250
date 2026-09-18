@@ -212,7 +212,7 @@ OS Installation
 
 The initial setup will involve flashing a new BIOS and clearing the CMOS. 
 
-- Bios flashing: https://elektricm.github.io/amd-bc250-docs/bios/flashing/
+- BIOS flashing: https://elektricm.github.io/amd-bc250-docs/bios/flashing/
 - Clearing the CMOS: https://elektricm.github.io/amd-bc250-docs/bios/flashing/#step-6-the-critical-cmos-clear
 
 After that is done, or, after any time you flash a new BIOS for whatever reason, remember to do these steps:
