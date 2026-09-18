@@ -90,27 +90,29 @@ const uint8_t END_INTERFACE = 6;
 const uint8_t NUM_INTFS = 7; // Array boundary spanning 0 to 6 (zero indexed, so the number is 7)
 
 AsyncWebServer server(80);
-bool ledIsOn = false; 
-unsigned long timeToWait = 0;
 usb_host_client_handle_t client_hdl = NULL;
 usb_device_handle_t dev_hdl = NULL;
 uint8_t current_interface = 2; 
 bool interface_is_claimed_map[NUM_INTFS] = { false };
 uint8_t interface_ep_address_map[NUM_INTFS] = { 0 };
 usb_transfer_t* interface_transfer_map[NUM_INTFS] = { NULL };
-unsigned long lastLEDHeartbeat = 0;
 int selectPinLastLoggedState;
 int sensePinLastLoggedState;
 int selectPinReadState;
 int sensePinReadState;
 bool shouldReboot = false;
-unsigned long lastDiagTime = 0;
 TaskHandle_t usbLibHandle = NULL;
 TaskHandle_t usbClientHandle = NULL;
 int logHead = 0;
 int logCount = 0;
-const unsigned long diagInterval = 2 * 60 * 1000;
+bool ledIsOn = false; 
+unsigned long timeToWait = 0;
+unsigned long lastLEDHeartbeat = 0;
+unsigned long lastControllerDataReceived = 0;
+unsigned long lastControllerDataReceivedCount = 0;
 unsigned long lastControllerDataLogTime = 0;
+unsigned long lastDiagTime = 0;
+const unsigned long diagInterval = 2 * 60 * 1000;
 
 // ============================================================================
 // LOGGING SYSTEM
@@ -276,6 +278,9 @@ static void hid_transfer_cb(usb_transfer_t *transfer)
     uint8_t intf = (uint8_t)(uintptr_t)transfer->context;
     current_interface = intf;
 
+    // Log that some data from the controller was received, but only log this
+    // information every few seconds, to prevent filling the log with a billion
+    // data messages. This uses a separate timestamp variable of its own.
     if (millis() - lastControllerDataLogTime >= 5000)
     {    
       lastControllerDataLogTime = millis();
@@ -295,20 +300,50 @@ static void hid_transfer_cb(usb_transfer_t *transfer)
     sensePinReadState = digitalRead(POWER_SENSE_PIN);
     if (sensePinReadState == LOW && selectPinReadState == LOW && timeToWait < 1)
     {
-      logMessage("Pulsing power on line.");
-      digitalWrite(POWER_ON_PULSE_PIN, HIGH);
-      delay(500);
-      digitalWrite(POWER_ON_PULSE_PIN, LOW);
+      // Bugfix for GitHub Issue #1: Ensure that the data is a continuous stream
+      // by checking the last time that data was received, and now many packets
+      // we got recently. Only do stuff if a few recent data packets were
+      // received.
+      lastControllerDataReceivedCount ++;
+      if (millis() - lastControllerDataReceived >= 100)
+      { 
+        // If the previous data was received a while ago, then consider this to
+        // be the first data packet. Don't actually do anything at first.
+        lastControllerDataReceived= millis();
+        lastControllerDataReceivedCount = 0;
+        logMessage("GitHub Issue #1 Bugfix: Early data packet received, taking no action yet.");
+      }
+      else
+      {
+        // Bugfix for GitHub Issue #1: If previous data was received recently,
+        // then consider this to be part of a longer stream of data rather than
+        // a one-time puck connection. Still, wait for more than just a single
+        // data packet, or else the bug still reproduces. We have to wait for a
+        // few of these packets to come through before counting this as the
+        // controller actually being "on".
+        lastControllerDataReceived= millis();
+        if (lastControllerDataReceivedCount < 5)
+        {
+          logMessage("GitHub Issue #1 Bugfix: Early data packet received, waiting for more data.");
+        }
+        else
+        {
+          logMessage("Enough data has been received: Pulsing power on line.");
+          digitalWrite(POWER_ON_PULSE_PIN, HIGH);
+          delay(500);
+          digitalWrite(POWER_ON_PULSE_PIN, LOW);
 
-      // When first booting the machine, there must be a long pause after
-      // the initial boot before switching the multiplexer into runtime
-      // mode. If we don't wait, and switch to runtime mode before the
-      // operating system is loaded up enough to talk to the USB puck,
-      // then the puck just shuts itself down and thus the controller
-      // shuts down again. This wait time keeps the multiplexer in
-      // monitor mode while we wait for the OS to boot.
-      logMessage("Waiting to switch USB to Runtime mode.");
-      timeToWait = 15000;
+          // When first booting the machine, there must be a long pause after
+          // the initial boot before switching the multiplexer into runtime
+          // mode. If we don't wait, and switch to runtime mode before the
+          // operating system is loaded up enough to talk to the USB puck,
+          // then the puck just shuts itself down and thus the controller
+          // shuts down again. This wait time keeps the multiplexer in
+          // monitor mode while we wait for the OS to boot.
+          logMessage("Waiting to switch USB to Runtime mode.");
+          timeToWait = 15000;
+        }
+      }
     }
 
     // ========================================================================
