@@ -499,7 +499,8 @@ Tip: Furmark keyboard shortcuts:
 
 #### What to Look For During the Furmark Test:
 
-- The "Donut" Frame Rate: On a fully unlocked 40 CU configuration running at roughly 1750MHz to 2100MHz, you should expect steady frame rates above 90+ FPS depending on your specific voltage, clock, and fan settings.
+- The "Donut" Frame Rate: On a fully unlocked 40 CU configuration running at roughly 1750MHz to 2100MHz, you should expect steady frame rates above 95+ FPS depending on your specific voltage, clock, and fan settings.
+- I have occasionally seen FurMark produce an anomalous test, with results in the 55-80 FPS range, without pushing the GPU to 85°c thermal limit. I don't know what causes it, but rebooting the machine and trying again seems to fix it.
 - Artifacting: Watch the furry donut closely. If you see flashing white/colored pixels, micro-stuttering, or random lines stretching across the screen, your 40 CUs are unstable, and you need to increase your core voltage (mV) slightly or pull back the clock speed.
 - Temps during Furmark:
   - 75°–80°c under maximum load: Super cool, the GPU is not being throttled.
