@@ -104,8 +104,14 @@ Some other parts which could have been used, but which I chose not to use.
 ### 3D Printed Parts
 
 - Custom case [details here](Case/README.md).
-- Fan attachment bracket [details here](Case/README.md).
+- Fan attachment bracket [details here](Case/README.md#install-the-cpu-fan-onto-the-bc-250).
 - Scooper tool (for bending the heat sink fins): [Link on Printables](https://www.printables.com/model/1282906-bc-250-scooper)
+
+
+### Custom Electronics
+
+- LED Controller [details here](LED%20Controller/README.md).
+- Steam Puck Controller Wake [details here](Steam%20Puck%20Controller%20Wake/README.md).
 
 
 ### Parts On-Hand
