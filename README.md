@@ -529,7 +529,7 @@ Solution:
 
 After you select the desired user, the Steam Controller starts working normally again and you can control the mouse pointer with it, without needing to hold the Steam button any more.
 
-I don't have better, more permanent solution for this at the moment.
+I don't have a better, more permanent solution for this at the moment.
 
 ### Problem when the user selects "Sleep"
 
