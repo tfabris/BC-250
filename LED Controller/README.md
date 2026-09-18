@@ -6,7 +6,7 @@ A small circuit to control three LEDs on the front of my BC-250 case. I am using
 
 | ![](../Photos/Badge%20On.jpg)                | ![](../Photos/Badge%20Standby.jpg)           |
 |:--------------------------------------------:|:--------------------------------------------:|
-| ![](../Photos/Badge%20With%20Board%2001.jpg) | ![](../Photos/Badge%20With%20Board%2002.jpg) |
+| ![](../Photos/Badge%20with%20Board%2001.jpg) | ![](../Photos/Badge%20with%20Board%2002.jpg) |
 
 
 Project Links
@@ -156,7 +156,7 @@ Soldering the LEDs at the correct depth is tricky. It was done by putting the ba
 
 (Not Pictured) To make the fitting of the LEDs and the badge easier, I used the cutting features of Bambu Studio to cut out and 3D print a small section of the front of the case where the badge gets mounted. It made the process of test fitting and tacking the LEDs in place much easier.
 
-| ![](../Photos/Badge%20With%20Board%2001.jpg) **LED Tips Are Painted Gray** | ![](../Photos/Badge%20With%20Board%2002.jpg) **Test Fitting Parts** |
+| ![](../Photos/Badge%20with%20Board%2001.jpg) **LED Tips Are Painted Gray** | ![](../Photos/Badge%20with%20Board%2002.jpg) **Test Fitting Parts** |
 |:--------------------------------------------------------------------------:|:-------------------------------------------------------------------:|
 
 The perfboard is mounted inside the case behind the front panel badge with small M2 x 10mm self-tapping plastic screws. The standoffs for the screws are at exactly the right depth for the LEDs and the button tops. The screw thickness must match the screw holes in the plastic, or else they will split the standoffs open.
