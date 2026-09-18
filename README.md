@@ -410,7 +410,7 @@ Mine said `ControllerMode = bredr` which was a massive problem, and caused me to
 
     ControllerMode = dual
 
-Ctrl-S Ctrl-X to save and exit, then restart the computer.
+Ctrl-S Ctrl-X to save and exit, then restart the BC-250.
 
 
 ### Keyboard FN key problem:
@@ -443,8 +443,7 @@ There is a lot of discussion about replacing the thermal pads on the BC-250. Fol
 
 This tiny increase might not be worth the effort. Plus you run the risk of damaging the board. This video shows the procedure, and the person who did the work makes a good case for just not doing this procedure and leaving the thermal pads as-is: https://youtu.be/FJapqZSdt6I
 
-Note: If you're going to do this, don't just buy the PTM7950, which is only useful on the main CPU/GPU. When you remove the heat sinks, there are many components with various thick blobs of thermal putty on them, and you should replace all of it once you've peeled it off. So Get some UTP-8 or UTP-X thermal putty to go along with the PTM7950 too.
-
+Note: If you're going to do this, don't just buy the PTM7950, which is only useful on the main CPU/GPU. When you remove the heat sinks, there are many components with various thick blobs of thermal putty on them, and you should replace all of it once you've peeled it off. So get some UTP-8 or UTP-X thermal putty to go along with the PTM7950 too.
 
 
 ### FurMark testing:
