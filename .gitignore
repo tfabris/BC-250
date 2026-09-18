@@ -1,0 +1,85 @@
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Linker output
+*.ilk
+*.map
+*.exp
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+.pio/
+sdkconfig.lolin_s2_mini
+CMakeLists.txt
+
+# Intermediate Files
+*.stl
+*.pm3
+*.chitubox
+
+# Various garbage
+.DS_Store
+.history/
+*.kicad_prl
+
+# Temporary files, experiments, and backups
+*.tmp
+*.temp
+*.old
+temp/
+tmp/
+Old Versions/
+PCB Wedge/
+Python/
+BIOS Firmware/
+Scooper/
+*.bak
+*.blend[0-9]*
+*.blend[0-9]~
+*Reference Parts*
+
+# Local credentials & development keys
+private_env.ini
+secrets.ini
