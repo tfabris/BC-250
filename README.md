@@ -13,6 +13,8 @@ Building a budget gaming console out of an ASRock BC-250 crypto mining card. It 
 |:-------------------------------:|:------------------------------------:|
 | ![](Photos/Badge%20Standby.jpg) | ![](Photos/BC-250%20With%20Fan.jpg)  |
 
+| ![](Photos/Docking.gif) |
+|:-----------------------:|
 
 Project Links
 -------------

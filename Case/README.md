@@ -9,6 +9,8 @@ A 3D Printed case for a BC-250 gaming system, with a full sized ATX power supply
 | ![](../Photos/Case%20Front.jpg) | ![](../Photos/Case%20Back.jpg)   |
 |:-------------------------------:|:--------------------------------:|
 
+| ![](../Photos/Docking.gif) |
+|:--------------------------:|
 
 Project Links
 -------------
