@@ -281,7 +281,7 @@ static void hid_transfer_cb(usb_transfer_t *transfer)
     // Log that some data from the controller was received, but only log this
     // information every few seconds, to prevent filling the log with a billion
     // data messages. This uses a separate timestamp variable of its own.
-    if (millis() - lastControllerDataLogTime >= 5000)
+    if (lastControllerDataLogTime == 0 || millis() - lastControllerDataLogTime >= 5000)
     {    
       lastControllerDataLogTime = millis();
       char status_msg[128];
