@@ -194,12 +194,32 @@ Then I 3D printed a mounting attachment to mount the 120mm cooling fan directly 
 |:-------------------------------------------------------:|:---------------------------------------------------------------------:|
 
 
+### Fan speed:
+
+I'm using a "Be Quiet!" brand Silent Wings Pro 120mm fan to keep the processor cool, combined with unfolding the heat sink fins with the scooper tool. This fan has a switch that lets you choose between M, HS, and UHS fan speeds (M is lowest, HS is middle, and UHS is highest). This switch is an overall speed control, and the BIOS fan speed settings are a percentage of that overall speed setting. 
+
+The BC-250 will automatically throttle the GPU if it gets hotter than 85°c. It should theoretically top out at that temperature and not go much beyond that, even under full load. If you set the fan to a higher setting, it will be noisy on graphics-heavy games, but you'll get faster FPS because it can keep the chip cooler. Under full load, the M setting is very quiet and the HS setting is quite noisy. I measured a difference of about 12 FPS in FurMark tests, between the M and the HS settings. I'm leaving mine on HS for now.
+
+
 ### RAM Cooling
 
 The back side of the BC-250's board contains its RAM chips underneath a flat aluminum plate. To ensure that the RAM stays cool, I have used thermal adhesive to attach a large heat sink to that area of the aluminum plate. Note that before gluing the heat sink into place, I drilled holes in the heat sink where it would have covered up access to the mounting screws. It's important not to lose access to those screws.
 
   | ![](Photos/BC-250%20With%20Heatsink.jpg) |
   |:----------------------------------------:|
+
+
+### Replacing Thermal Pads
+
+There is a lot of discussion about replacing the thermal pads on the BC-250. Folks suggest using a piece of 0.25mm thick PTM7950 thermal pad on the central processor. I did this for mine, and for a brief, shining moment, it resulted in a very slight increase in FPS at the 85°c thermal throttle point. I measured about a 4% increase in FurMark, increasing the frame rate from about 109 FPS to about 114 FPS.
+
+This tiny increase might not be worth the effort. It's a messy, tedious, difficult job, the materials are needlessly expensive, and you run the risk of damaging the board. This video shows the procedure, and they make a good case for *not* doing this procedure, and just leaving the thermal pads as-is: https://youtu.be/FJapqZSdt6I
+
+If you're going to do this, don't just buy the PTM7950, which is only useful on the main CPU. You also need thermal putty, such as Upsiren UTP-8 or UTP-X. There are many components with various thick blobs of thermal putty on them, and some of it peels up as you're removing the heat sinks. This putty might also need replacing, and the thin sheets of PTM7950 are not nearly thick or plentiful enough to fill the gaps between these components and the heat sink. Make sure you get enough of the stuff, it comes in the tiniest little jar: when it arrived, I thought they'd sent me the wrong size. I would say the 50g size would be maybe barely enough, and the 100g size would give you extra just in case.
+
+At first I had done just the PTM7950 on the CPU, but then, I worried that I was going to fry the other components if I didn't get in there and replace their putty too. So I got the UTP-X thermal putty and redid the entire thing, replacing the original putty in all the other spots on the board as well as re-replacing the PTM7950 on the CPU. (Every time you peel off the heatsink, you must replace the thermal pad on the CPU, since the pad crumbles.)
+
+The worst part is: My frame rate went back down again after replacing the putty. Replacing the putty on all the secondary components erased the gains I'd made by replacing the CPU's pad with PTM7950. I'm not sure why it got worse after replacing the putty. So, after having done it, I agree with the person in the video: Leave the thermal pads alone, don't bother to replace them unless you're completely changing out the heat sink.
 
 
 ### SSD Storage
@@ -226,13 +246,14 @@ After that is done, or, after any time you flash a new BIOS for whatever reason,
 - Set UMA Frame Buffer Size to 512MB.
 - Navigate to: Advanced → CPU Configuration.
 - Set IOMMU to Disabled.
-- Navigate to: Advanced, DXE Driver Configuration (only available with a special BIOS).
-- Set 8 Core Unlock to Enabled
+- ***Only available with a special BIOS:*** Navigate to: Advanced, DXE Driver Configuration, and set 8 Core Unlock to Enabled.
 - Press F10 to Save and Exit.
 
 ### Installing the Operating System
 
-With the BIOS updated, you can install the operating system from a USB stick. I chose to install Bazzite Deck because this seemed to be the most gaming-focused and most of the instructions online assume that you're on some flavor of Bazzite.
+Don't forget to install the SSD before trying to install the OS.
+
+With the BIOS updated, you can install the operating system from a USB stick. I chose to install Bazzite Deck because it seemed to be the most gaming-focused, and most of the instructions online assume that you're on some flavor of Bazzite. Later I decided to switch to Bazzite-KDE instead of Bazzite-Deck.
 
 I followed the instructions here: https://elektricm.github.io/amd-bc250-docs/linux/bazzite/
 
@@ -354,6 +375,7 @@ Tips and Tricks
 
 This is a collection of useful things I learned when setting up the system and testing it.
 
+
 ### Enable SSH in the operating system
 
 Enabling SSH is one of the earliest things I would do after getting an operating system installed. This makes it easier to paste commands to the BC-250 from another computer. On the BC-250, in its terminal, enter:
@@ -366,9 +388,26 @@ This should permanently enable remote SSH logins to the system. Afterwards, ente
 
 Being able to SSH into the BC-250 is very nice because it works even when the BC-250 is in "Gaming Mode", sitting on the Steam Big Picture screen. It allows you to remotely issue terminal commands and do other kinds of various maintenance to it. Almost all of the terminal commands listed elsewhere in this document can be done from the remote SSH shell.
 
+
+### Enable file sharing on Bazzite:
+
+  File sharing via the SMB ("Samba") service is useful to activate on the BC-250 so that you can copy files to it from another computer. For example, to transfer non-Steam games to it.
+
+      sudo systemctl enable --now smb.service
+      sudo setsebool -P samba_export_all_rw=1
+      sudo firewall-cmd --permanent --add-service=samba
+      sudo firewall-cmd --reload
+      sudo smbpasswd -a YourUserName
+
+  If you are connecting to it from a MacOS computer, do it by opening finder, choosing "Connect to Server" from its menu, and entering the machine's address in the following format:
+
+      smb://UserName@NameOfMyBC250.local/
+
+
 ### Get general system updates
 
     ujust update
+
 
 ### Clear Steam Cache and reset it
 
@@ -380,9 +419,11 @@ This resets Steam without deleting games, in case its has problems:
     sudo rpm-ostree cleanup -r
     ujust update
 
+
 ### Display CPU/GPU temperatures in Steam Performance Overlay:
 
 While gaming, press the three-dots button on the Steam controller (or press Ctrl-Shift-Tab on the keyboard), select the lighting bolt icon and choose level 3 or level 4 of the performance overlay. Temperatures should be displayed there. It doesn't have your motherboard temperature, just CPU and GPU, but I tried adding the motherboard temp to it, and the Google suggestions messed up the overlay and caused all sorts of problems. Recommend keeping the overlay at its default settings and just using Level 3 to display CPU and GPU temperature.
+
 
 ### Bluetooth Pairing
 
@@ -438,22 +479,6 @@ If you ever need to reverse this change in the future, you can remove the argume
     systemctl reboot
 
 
-### Fan speed:
-
-I'm using a "Be Quiet!" brand Silent Wings Pro 120mm fan to keep the CPU/GPU cool, combined with unfolding the heat sink fins with the scooper tool. This fan has a switch that lets you choose between M, HS, and UHS fan speeds (M is lowest, HS is middle, and UHS is highest). This switch is an overall speed control, and the BIOS fan curve is a percentage of that overall speed setting. 
-
-The BC-250 will automatically throttle the GPU if it gets hotter than 85°c. It should theoretically top out at that temperature and not go much beyond that, even under full load. If you set the fan to a higher setting, it will be noisy on graphics-heavy games, but you'll get faster FPS because it can keep the chip cooler. Under full load, the M setting is very quiet and the HS setting is quite noisy. I measured a difference of about 12 FPS in FurMark tests, between the M and the HS settings.
-
-
-### Replacing Thermal Pads
-
-There is a lot of discussion about replacing the thermal pads on the BC-250. Folks suggest using a piece of PTM7950 thermal pad for the CPU/GPU. I did this for mine, and it resulted in a very slight increase in FPS before it hit its 85°c thermal throttle point. I measured about a 4% increase in FurMark, increasing the frame rate from about 109 FPS to about 114 FPS.
-
-This tiny increase might not be worth the effort. Plus you run the risk of damaging the board. This video shows the procedure, and the person who did the work makes a good case for just not doing this procedure and leaving the thermal pads as-is: https://youtu.be/FJapqZSdt6I
-
-Note: If you're going to do this, don't just buy the PTM7950, which is only useful on the main CPU/GPU. When you remove the heat sinks, there are many components with various thick blobs of thermal putty on them, and you should replace all of it once you've peeled it off. So get some UTP-8 or UTP-X thermal putty to go along with the PTM7950 too.
-
-
 ### FurMark testing:
 
 FurMark is a popular graphics stress test:
@@ -481,13 +506,13 @@ Run FurMark
 
     ./FurMark_GUI
 
-Optional: run it with MangoHud (the Steam performance overlay) - This is not strictly needed since FurMark shows a lot of performance details by itself.
+Optional: run it with MangoHud (the Steam performance overlay) - This is not strictly needed since FurMark shows a lot of performance details by itself, including GPU temperature.
 
     mangohud ./FurMark_GUI
 
 Set the API to Vulkan or OpenGL, choose 1080p, and run a standard test.
 
-Tip: MangoHud keyboard shortcuts:
+Tip: MangoHud keyboard shortcuts (if using MangoHud):
 - RightShift+F12 toggles HUD on and off
 - RightShift+F11 changes HUD position on the screen
 - RightShift+F10 changes the amount of data that the hud is showing
@@ -500,7 +525,7 @@ Tip: Furmark keyboard shortcuts:
 #### What to Look For During the Furmark Test:
 
 - The "Donut" Frame Rate: On a fully unlocked 40 CU configuration running at roughly 1750MHz to 2100MHz, you should expect steady frame rates above 95+ FPS depending on your specific voltage, clock, and fan settings.
-- I have occasionally seen FurMark produce an anomalous test, with results in the 55-80 FPS range, without pushing the GPU to 85°c thermal limit. I don't know what causes it, but rebooting the machine and trying again seems to fix it.
+- I have occasionally seen FurMark produce an anomalous test, with results in the 55-80 FPS range, without pushing the GPU to its 85°c thermal limit. I don't know what causes it, but closing and reopening FurMark, or rebooting the machine and trying again, seems to fix it.
 - Artifacting: Watch the furry donut closely. If you see flashing white/colored pixels, micro-stuttering, or random lines stretching across the screen, your 40 CUs are unstable, and you need to increase your core voltage (mV) slightly or pull back the clock speed.
 - Temps during Furmark:
   - 75°–80°c under maximum load: Super cool, the GPU is not being throttled.
@@ -517,7 +542,7 @@ If you run into problems like I did, after Furmark, the performance overlay migh
 
 ### Fix Steam Performance Overlay Text Size
 
-The Steam performance overlay (called "mangohud") is often too tiny to read on a 4K display. Fix it with this:
+The Steam performance overlay (called "MangoHud") is often too tiny to read on a 4K display, if you are running your games in 4K. The fix:
 
 You must create an environment variable that tells it to read the current config, and add another var to it. By the way, in the following command, if you don't have the statement "read_cfg" in there, there will be a weird behavior where it forces the performance hud on all the time, so don't forget that part of the command.
 
@@ -528,9 +553,9 @@ You must create an environment variable that tells it to read the current config
 
 When you are in Bazzite's Gaming Mode (in Steam Big Picture), and from there, you switch to Desktop Mode using the Steam Controller, there is a moment of trouble as you switch to Desktop Mode.
 
-The Steam Controller is supposed to let you control your mouse, even in Desktop Mode. Which it does, normally. But on my system, I have configured Steam so that it prompts for which user is logging in (my account or my girlfriend's account). This means that each time Steam launches, it doesn't fully load Steam at first, while there is that prompt on the screen asking to choose which user is logging in.
+The Steam Controller is supposed to let you control your mouse, even in Desktop Mode. Which it does, normally. But on my system, I have configured Steam so that it prompts for which user is logging in (me or my girlfriend). This means that each time Steam launches, it doesn't fully load Steam at first, it sits there on a prompt asking to choose which user is logging in.
 
-There is a bug in Steam with this user prompt, which is as follows: In Bazzite's Gaming Mode, it's fine, the Steam Controller works. When you switch to Bazzite's Desktop Mode, it launches the Desktop version of Steam and prompts for the user. For some reason, in this screen, ***the Steam Controller is not working yet***. You cannot answer the user login with the Steam Controller. This is yet another egregious unfixed bug in Steam.
+There is a bug in Steam with this user prompt: In Bazzite's Gaming Mode, the Steam Controller works fine during that prompt. But when you switch to Bazzite's Desktop Mode, the Desktop version of Steam prompts for the user, and for some reason, ***the Steam Controller is not working yet.*** You cannot answer the user login with the Steam Controller, when in Desktop mode. This is yet another egregious unfixed bug in Steam.
 
 Solution:
 - Hold the Steam button and swipe the right trackpad, to make the mouse cursor appear.
@@ -558,19 +583,6 @@ Solution:
       sudo rm /etc/systemd/system/suspend.target
       sudo systemctl daemon-reload
 
-### Enable file sharing on Bazzite:
-
-  File sharing via the SMB ("Samba") service is useful to activate on the BC-250 so that you can copy files to it from another computer. For example, to transfer non-Steam games to it.
-
-      sudo systemctl enable --now smb.service
-      sudo setsebool -P samba_export_all_rw=1
-      sudo firewall-cmd --permanent --add-service=samba
-      sudo firewall-cmd --reload
-      sudo smbpasswd -a YourUserName
-
-  If you are connecting to it from a MacOS computer, do it by opening finder, choosing "Connect to Server" from its menu, and entering the machine's address in the following format:
-
-      smb://UserName@NameOfMyBC250.local/
 
 ### Fix the "Mouse at the Top of the Screen" bug:
 
