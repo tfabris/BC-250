@@ -64,23 +64,23 @@ Parts
 
 Links and prices are just examples, are approximate, and are temporary. Note that in most cases I spent extra for fast shipping, which drove the prices up. For example, the main card was only $165.00, but I spent an extra $30.00 on shipping. Some of the parts, such as the power supply, are overkill for what was actually needed, I could have chosen cheaper components.
 
-Prices are from August 2026, and include the extra shipping:
+Prices are from August 2026, and do not include shipping:
 
-- Surplus ASRock BC-250 Crypto-mining Card: [≈195.00 Ebay](https://www.ebay.com/itm/178370111924)
+- Surplus ASRock BC-250 Crypto-mining Card: [≈165.00 Ebay](https://www.ebay.com/itm/178370111924)
 - Be Quiet! Pure Power 13 750w ATX power supply: [≈90.00 Amazon](https://www.amazon.com/dp/B0FBX9VS3B)
 - Be Quiet! Silent Wings Pro 4 120mm cooling fan: [≈29.00 Amazon](https://www.amazon.com/dp/B0B746VB2F)
 - PTM7950 thermal pad: [≈36.00 Amazon](https://www.amazon.com/dp/B0BX45ZS8H)
 - Upsiren UTP-X Thermal Putty: [≈50.00 Amazon](https://www.amazon.com/dp/B0CSZ7R2XW)
 - LiebeWH 150x120x20mm Aluminum Passive Heat Sink: [≈14.00 Amazon](https://www.amazon.com/dp/B0C7RTSM6S)
-- Alphacool Core 2-Part Heat Conducting Adhesive: [≈20.00 NewEgg](https://www.newegg.com/alphacool-1020421/p/37B-0003-00837)
+- Alphacool Core 2-Part Heat Conducting Adhesive: [≈12.00 NewEgg](https://www.newegg.com/alphacool-1020421/p/37B-0003-00837)
 - Patriot P300 M.2 PCIe Gen 3 512GB SSD: [≈80.00 Amazon](https://www.amazon.com/dp/B082BJ4679)
-- Ugreen Active DisplayPort to HDMI Adapter: [≈33.00 Amazon](https://www.amazon.com/dp/B0FQCGSWW3)
-- Kinivo BTD500 Bluetooth 5.0 Adapter: [≈26.00 Amazon](https://www.amazon.com/dp/B0BQYL2PK3)
-- Molex 44769-0801 Micro Fit connector (for LED badge): [≈10.00 DigiKey](https://www.digikey.com/en/products/detail/molex/0447690801/513218)
-- ATX 24-pin power socket connector (for LED badge): [≈10.00 SparkFun](https://www.sparkfun.com/atx-power-supply-connector-right-angle.html)
-- ESP32 S2 Mini ESP32-S2FN4R2 (for Controller Wake): [≈20.00 Amazon](https://www.amazon.com/dp/B0B291LZ99)
-- TS3USB221E USB Multiplexer Board (for Controller Wake): [≈10.00 Amazon](https://www.amazon.com/dp/B099NPVWP3)
-- Snappable PC Prototype board (for LED and Wake circuits): [≈10.00 Amazon](https://www.amazon.com/dp/B081QYPHHP)
+- Ugreen Active DisplayPort to HDMI Adapter: [≈20.00 Amazon](https://www.amazon.com/dp/B0FQCGSWW3)
+- Kinivo BTD500 Bluetooth 5.0 Adapter: [≈14.00 Amazon](https://www.amazon.com/dp/B0BQYL2PK3)
+- Molex 44769-0801 Micro Fit connector (for LED badge): [≈5.00 DigiKey](https://www.digikey.com/en/products/detail/molex/0447690801/513218)
+- ATX 24-pin power socket connector (for LED badge): [≈2.00 SparkFun](https://www.sparkfun.com/atx-power-supply-connector-right-angle.html)
+- ESP32 S2 Mini ESP32-S2FN4R2 (for Controller Wake): [≈5.00 Amazon](https://www.amazon.com/dp/B0B291LZ99)
+- TS3USB221E USB Multiplexer Board (for Controller Wake): [≈5.00 Amazon](https://www.amazon.com/dp/B099NPVWP3)
+- Snappable PC Prototype board (for LED and Wake circuits): [≈5.00 Amazon](https://www.amazon.com/dp/B081QYPHHP)
 
 ### Alternative Parts
 
