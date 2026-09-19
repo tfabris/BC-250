@@ -58,9 +58,12 @@ There are also buttons under the translucent Steam logo badge. The buttons are w
 Schematic
 ---------
 
-Refer to the accompanying schematic file (open it in Kicad):
+Included schematic versions:
 
-  - "BC-250 LED Controller.kicad_sch"
+  - KiCad File:   [BC-250 LED Controller.kicad_sch](BC-250%20LED%20Controller.kicad_sch)
+  - PDF Document: [BC-250 LED Controller.pdf](BC-250%20LED%20Controller.pdf)
+  - JPG Image:   ![BC-250 LED Controller.jpg](BC-250%20LED%20Controller.jpg)
+
 
 Components
 ----------

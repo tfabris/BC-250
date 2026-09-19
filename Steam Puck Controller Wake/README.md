@@ -126,9 +126,12 @@ The J3 connection goes to a couple of things: It connects to a front-panel [powe
 Schematic
 ---------
 
-Refer to the accompanying schematic file (open it in Kicad):
+Included schematic versions:
 
-  - "Steam Puck Controller Wake.kicad_sch"
+  - KiCad File:   [Steam Puck Controller Wake.kicad_sch](Steam%20Puck%20Controller%20Wake.kicad_sch)
+  - PDF Document: [Steam Puck Controller Wake.pdf](Steam%20Puck%20Controller%20Wake.pdf)
+  - JPG Image:   ![Steam Puck Controller Wake.jpg](Steam%20Puck%20Controller%20Wake.jpg)
+
 
 Components
 ----------
