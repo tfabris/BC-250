@@ -435,6 +435,8 @@ Notes
 
 Information that comes up when it's plugged into my Mac:
 
+      pio device list
+      
       /dev/cu.usbmodemFXB99605014FB1
       Hardware ID: USB VID:PID=28DE:1304 SER=FXB99605014FB LOCATION=2-1.1.2.4
       Description: Steam Controller Puck
