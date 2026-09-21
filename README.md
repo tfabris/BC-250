@@ -406,7 +406,7 @@ Being able to SSH into the BC-250 is very nice because it works even when the BC
 
 ### Install BC-250 Control Center on Bazzite
 
-  Useful Control Center app. It can help with overclocking, unlocking GPU cores, fan monitoring, etc:
+  Useful Control Center app. It can help with overclocking, unlocking GPU cores, fan speeds, etc:
 
   https://github.com/movacx/bc250-control-center
 
