@@ -614,4 +614,3 @@ Solution:
 To-Do List
 ----------
 - Ensure that my voltages, overclocks, fan curves, etc., are all set optimally.
-- Find out if there are any ways to get Bazzite to boot faster and get me into the Big Picture mode quicker.
