@@ -389,7 +389,7 @@ This should permanently enable remote SSH logins to the system. Afterwards, ente
 Being able to SSH into the BC-250 is very nice because it works even when the BC-250 is in "Gaming Mode", sitting on the Steam Big Picture screen. It allows you to remotely issue terminal commands and do other kinds of various maintenance to it. Almost all of the terminal commands listed elsewhere in this document can be done from the remote SSH shell.
 
 
-### Enable file sharing on Bazzite:
+### Enable file sharing on Bazzite
 
   File sharing via the SMB ("Samba") service is useful to activate on the BC-250 so that you can copy files to it from another computer. For example, to transfer non-Steam games to it.
 
@@ -402,6 +402,18 @@ Being able to SSH into the BC-250 is very nice because it works even when the BC
   If you are connecting to it from a MacOS computer, do it by opening finder, choosing "Connect to Server" from its menu, and entering the machine's address in the following format:
 
       smb://UserName@NameOfMyBC250.local/
+
+
+### Install BC-250 Control Center on Bazzite
+
+  Useful Control Center app. It can help with overclocking, unlocking GPU cores, fan monitoring, etc:
+
+  https://github.com/movacx/bc250-control-center
+
+  Download the latest version of the ".rpm" file from the releases page, then:
+
+      sudo rpm-ostree install ./bc250-control-center-*.rpm
+      systemctl reboot
 
 
 ### Get general system updates
@@ -420,14 +432,14 @@ This resets Steam without deleting games, in case its has problems:
     ujust update
 
 
-### Display CPU/GPU temperatures in Steam Performance Overlay:
+### Display CPU/GPU temperatures in Steam Performance Overlay
 
 While gaming, press the three-dots button on the Steam controller (or press Ctrl-Shift-Tab on the keyboard), select the lighting bolt icon and choose level 3 or level 4 of the performance overlay. Temperatures should be displayed there. It doesn't have your motherboard temperature, just CPU and GPU, but I tried adding the motherboard temp to it, and the Google suggestions messed up the overlay and caused all sorts of problems. Recommend keeping the overlay at its default settings and just using Level 3 to display CPU and GPU temperature.
 
 
 ### Bluetooth Pairing
 
-#### My Bluetooth Adapters:
+#### My Bluetooth Adapters
 
   Current Bluetooth Adapter:
   - Kinivo BTD500 based on Realtek RTL8761B chipset which is theoretically supposed to be well supported on Linux. This one is working very well for mouse and keyboard for me right now. It doesn't have WiFi, just Bluetooth.
@@ -435,7 +447,7 @@ While gaming, press the three-dots button on the Steam controller (or press Ctrl
   Available Blutooth Adapter:
   - Fantia DriverFree AX900 USB WiFi 6 Bluetooth 5.3 Adapter 2 in 1 Dongle Dual Band 2.4G & 5GHz USB WiFi Network Wireless WLAN Receiver. Chipset: Realtek RTL8851BU. I'm hooked up via wired ethernet, so I don't need this device's WiFi connection, and I have it set aside in case I need to add WiFi later.
 
-#### Pairing Keyboards:
+#### Pairing Keyboards
 
 Trying to pair a keyboard from the Steam UI gives you guff. This happens because Steam doesn't know how to prompt the user to enter a PIN code when pairing a keyboard. This is an egregious and unforgivable bug in Steam. It caused me no end of trouble until I realized that the whole problem was simply due to the lack of a PIN prompt in Steam.
 
@@ -447,7 +459,7 @@ Instead, Pair your keyboard from desktop mode, in Bazzite's main settings screen
   - Even if the keyboard does not have a "name" on this screen, its icon will likely show a picture of a little keyboard, choose that one.
   - It will prompt you to type a PIN code. Type that PIN carefully on the keyboard and press RETURN.
 
-#### Pairing Mice:
+#### Pairing Mice
 
 If you have a problem with pairing a mouse, in particular, if your favorite mouse never shows up in the list of bluetooth devices, then check the following. I had this problem with Bluetooth-LE mice. LE meaning mice with the "Low Energy" profile, such as Logitech MX-Anywhere brand mice:
 
@@ -462,7 +474,7 @@ Mine said `ControllerMode = bredr` which was a massive problem, and caused me to
 Ctrl-S Ctrl-X to save and exit, then restart the BC-250.
 
 
-### Keyboard FN key problem:
+### Keyboard FN key problem
 
 Some wireless keyboards have weird symbolic functions on the function keys as their default. For example, instead of F1, you get brightness. You have to press FN-F1 to actualy use F1. This sucks, and it's genuinely problematic for many games which use the function keys on the keyboard. To fix it temporarily:
 
@@ -479,7 +491,7 @@ If you ever need to reverse this change in the future, you can remove the argume
     systemctl reboot
 
 
-### FurMark testing:
+### FurMark testing
 
 FurMark is a popular graphics stress test:
 - https://geeks3d.com/furmark/
@@ -522,7 +534,7 @@ Tip: Furmark keyboard shortcuts:
 - Alt+F3 - Window menu
 - Alt+F4 - Close app
 
-#### What to Look For During the Furmark Test:
+#### What to Look For During the Furmark Test
 
 - The "Donut" Frame Rate: On a fully unlocked 40 CU configuration running at roughly 1750MHz to 2100MHz, you should expect steady frame rates above 95+ FPS depending on your specific voltage, clock, and fan settings.
 - I have occasionally seen FurMark produce an anomalous test, with results in the 55-80 FPS range, without pushing the GPU to its 85°c thermal limit. I don't know what causes it, but closing and reopening FurMark, or rebooting the machine and trying again, seems to fix it.
@@ -584,7 +596,7 @@ Solution:
       sudo systemctl daemon-reload
 
 
-### Fix the "Mouse at the Top of the Screen" bug:
+### Fix the "Mouse at the Top of the Screen" bug
 
   There is a particularly annoying misfeature where, in Desktop Mode, if you move your mouse pointer to the top of the screen, the whole screen messes up. It shifts everything around, and the windows pop into little tiles, and suddenly nothing is where you expect it any more, and the thing you were trying to reach with your mouse has disappeared. It feels like getting the rug pulled out from under you.
 
@@ -602,3 +614,4 @@ Solution:
 To-Do List
 ----------
 - Ensure that my voltages, overclocks, fan curves, etc., are all set optimally.
+- Find out if there are any ways to get Bazzite to boot faster and get me into the Big Picture mode quicker.
