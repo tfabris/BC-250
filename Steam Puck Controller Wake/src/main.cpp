@@ -438,11 +438,19 @@ static void usb_client_event_cb(const usb_host_client_event_msg_t *event_msg, vo
                   while (next_desc != NULL && !found_ep_for_this_intf)
                   {
                     next_desc = usb_parse_next_descriptor(next_desc, config_desc->wTotalLength, &offset);
+
+                    // Shortcut the loop.
                     if (next_desc == NULL || next_desc->bDescriptorType == 0x04) break;
+
+                    // Check if it's the endpoint descriptor type (0x05).
                     if (next_desc->bDescriptorType == 0x05)
                     {
-                      // We must communicate with specific endpoint addresses inside each interface.
                       const usb_ep_desc_t *ep = (const usb_ep_desc_t *)next_desc;
+
+                      // We must communicate with specific endpoint addresses
+                      // inside each interface. 0x80 is testing if it's an "IN"
+                      // endpoint. 0x03 is testing if it's an "Interrupt"
+                      // transfer type.
                       if ((ep->bEndpointAddress & 0x80) && ((ep->bmAttributes & 0x03) == 0x03))
                       {
                         // Update our map of connected interfaces.
