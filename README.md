@@ -596,13 +596,20 @@ Solution:
       sudo systemctl daemon-reload
 
 
+### Bazzite Automatic Updates
+
+To configure Bazzite to perform automatic background system updates (which, when they become available, will be downloaded in the background and applied on the next reboot):
+
+      systemctl enable --now uupd.timer
+
+
 ### Fix the "Mouse at the Top of the Screen" bug
 
-  There is a particularly annoying misfeature where, in Desktop Mode, if you move your mouse pointer to the top of the screen, the whole screen messes up. It shifts everything around, and the windows pop into little tiles, and suddenly nothing is where you expect it any more, and the thing you were trying to reach with your mouse has disappeared. It feels like getting the rug pulled out from under you.
+There is a particularly annoying misfeature where, in Desktop Mode, if you move your mouse pointer to the top of the screen, the whole screen messes up. It shifts everything around, and the windows pop into little tiles, and suddenly nothing is where you expect it any more, and the thing you were trying to reach with your mouse has disappeared. It feels like getting the rug pulled out from under you.
 
-  This misfeature supposedly lets you switch windows or virtual desktops or something like that. I am not using any of these features, and so this gets in the way of just trying to use the mouse to select something near the top of the screen. When using the Steam Controller to navigate the Bazzite desktop, it is far too easy to activate this feature accidentally. I don't know why operating systems have this feature on by default. It should be off by default, and only turn on if you start setting up multiple virtual desktops. Anyway...
+This misfeature supposedly lets you switch windows or virtual desktops or something like that. I am not using any of these features, and so this gets in the way of just trying to use the mouse to select something near the top of the screen. When using the Steam Controller to navigate the Bazzite desktop, it is far too easy to activate this feature accidentally. I don't know why operating systems have this feature on by default. It should be off by default, and only turn on if you start setting up multiple virtual desktops. Anyway...
 
-  Solution:
+Solution:
   - Bazzite Destop Mode
   - System Settings
   - Display & Monitor
