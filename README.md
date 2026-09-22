@@ -404,6 +404,17 @@ Being able to SSH into the BC-250 is very nice because it works even when the BC
       smb://UserName@NameOfMyBC250.local/
 
 
+### Remotely switch to desktop/gaming mode
+
+If you are logged into to the remote SSH shell, and you want to switch the machine from gaming mode (Steam Big Picture mode) and go to desktop mode issue this command:
+
+    steamos-session-select plasma
+
+And the reverse, going into gaming mode from desktop mode:
+
+    steamos-session-select gamescope
+
+
 ### Install BC-250 Control Center on Bazzite
 
   Useful Control Center app. It can help with overclocking, unlocking GPU cores, fan speeds, etc:
@@ -416,11 +427,6 @@ Being able to SSH into the BC-250 is very nice because it works even when the BC
       systemctl reboot
 
 
-### Get general system updates
-
-    ujust update
-
-
 ### Clear Steam Cache and reset it
 
 This resets Steam without deleting games, in case its has problems:
@@ -430,6 +436,66 @@ This resets Steam without deleting games, in case its has problems:
     rm -rf ~/.steam/steam/appcache
     sudo rpm-ostree cleanup -r
     ujust update
+
+
+### Steam permanently says "Updates available"
+
+I occasionally get into situations where Steam has the little yellow exclamation mark icon, which says that updates are available. Then if you install them and reboot, then check for updates again, the icon comes back. I'm currently trying to debug this. Suggested by Google: Gracefully exit Steam, then clear its package and application caches with these commands:
+
+    killall -s SIGTERM steam
+    rm -rf ~/.steam/steam/package/*
+    rm -rf ~/.steam/steam/appcache/*
+
+The above did not fix the issue, my client is still in a permanent "updates available" loop. Still trying to debug this issue!
+
+
+### Check if your Steam client is updated
+
+Since I'm still having problems, where Steam permanently says "Updates available" even when it's up to date, sometimes I want to know if my Steam client really is updated or not. This is how to find out for sure:
+
+#### By hand
+
+- Select Help → About Steam (desktop mode) or Settings → System (big picture mode).
+- Note the Steam Version such as `1788652215`, and the build dates for the Client and Web components.
+- To find out the most recent available version of steam, download the manifest file from one of these URLs, depending on which branch you're on:
+  - Stable branch: https://client-update.steamstatic.com/steam_client_ubuntu12
+  - Beta branch: https://client-update.steamstatic.com/steam_client_publicbeta_ubuntu12
+  - Those URLs will download a file to your disk which you can open in a text editor, and will have a "version" near the top of the file. If it matches, you're good.
+
+#### At the console
+
+Use CURL and GREP at the console to parse out the version numbers without having to download a file.
+
+- Obtain the locally installed version according to the logs:
+
+      grep "installed version" ~/.local/share/Steam/logs/bootstrap_log.txt | tail -n 1 | sed -n 's/.*installed version \([0-9]\+\).*/\1/p'
+
+- Obtain the stable branch version from the web:
+
+      curl -s https://client-update.steamstatic.com/steam_client_ubuntu12 | grep -o '"version"[[:space:]]\+"[0-9]\+"' | grep -o '[0-9]\+'
+
+- Obtain the beta branch version from the web:
+
+      curl -s https://client-update.steamstatic.com/steam_client_publicbeta_ubuntu12 | grep -o '"version"[[:space:]]\+"[0-9]\+"' | grep -o '[0-9]\+'
+
+
+#### A script to automatically check for me
+
+Save this script to your home folder as `SteamVersion.sh`, do a `chmod +x SteamVersion.sh` and run it with `./SteamVersion.sh`:
+- [SteamVersion.sh](SteamVersion.sh)
+
+
+#### Version Number Format
+
+By the way, these version numbers are just unix datestamps, you can convert them to a date string with a command like this if you want:
+
+         date -d @1788652215 -u
+
+
+
+
+
+
 
 
 ### Display CPU/GPU temperatures in Steam Performance Overlay
@@ -596,11 +662,44 @@ Solution:
       sudo systemctl daemon-reload
 
 
+### Get general system updates
+
+    ujust update
+
+Optionally: In Desktop mode, run the "Bazzite Portal" application, and in the "Manage Bazzite" tab, click on "Update your System", and optionally, select "Add Bazzite Updater to Steam Big Picture" so that you can run the updater GUI from inside Steam if you like.
+
+
 ### Bazzite Automatic Updates
 
 To configure Bazzite to perform automatic background system updates (which, when they become available, will be downloaded in the background and applied on the next reboot):
 
-      systemctl enable --now uupd.timer
+    systemctl enable --now uupd.timer
+
+Check its status with this command:
+
+    systemctl status uupd.timer
+
+If desired, edit its frequency by editing this file:
+
+    sudo nano /etc/systemd/system/uupd.timer.d/override.conf
+
+  Add this to the file:
+
+    [Timer]
+    OnCalendar=
+    OnCalendar=*-*-* *:0/15:00
+    OnBootSec=30s
+    RandomizedDelaySec=5s
+
+Ctrl-s Ctrl-x to save and exit. Then reload the daemon to make it take effect:
+
+    sudo systemctl daemon-reload
+
+That will make it check for system updates in the background, starting about 30 seconds after boot, and then about once every quarter hour on the clock after that. If it finds any, it will stage them, and the next reboot will apply them.
+
+If there are any problems with the updates, you can manually invoke it and watch its logging output with this:
+
+    sudo /usr/bin/uupd --log-level=debug
 
 
 ### Fix the "Mouse at the Top of the Screen" bug
