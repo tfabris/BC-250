@@ -285,7 +285,7 @@ Prepare your computer for compiling and uploading the ESP32 code. In my case, I 
 
 ### Install PlatformIO Core CLI
 
-Ensure that your computer is has Python 3 installed, then install PlatformUI using their `get-platformio.py` installer script. Follow their instructions here:
+Ensure that your computer has Python 3 installed, then install PlatformUI using their `get-platformio.py` installer script. Follow their instructions here:
 
 - https://docs.platformio.org/en/latest/core/installation/methods/installer-script.html
 
