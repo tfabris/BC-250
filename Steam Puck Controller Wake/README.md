@@ -247,7 +247,7 @@ This device is intended to sit inside my [BC-250 case](../Case/README.md), so af
 
 #### Arbitrary GPIO Pins:
 
-The ESP32 code uses three GPIO pins for its sensing and control lines. I chose which pins were which, based on the convenience of their positioning on my perf board. You might choose different pins, so update those in the ESP32 code (in main.cpp) before uploading the code to your ESP32.
+The ESP32 code uses three GPIO pins for its sensing and control lines. I chose which pins were which, based on the convenience of their positioning on my perf board. You might choose different pins, so update those in the ESP32 code (in main.cpp) before uploading the code to your ESP32. Make sure to **check the documentation for your specific model of ESP32** to decide which pins to use. Some of the GPIO pins on an ESP32 might have secondary functions or limitations which might interfere. For instance, some pins might not have pullup/pulldown capability, or might interfere with flash programming.
 
 #### Glue down the loose wires for strain relief:
 
