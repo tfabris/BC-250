@@ -647,13 +647,32 @@ void handle_pulse_request(AsyncWebServerRequest *request)
 // ============================================================================
 void setup_networking()
 {
+  // Attempted bugfixes for GitHub issue #2. Try to add additional commands
+  // which hopefully might help it stay connected to WiFi more stably. If these
+  // do not fix the problem, implement a watchdog in the main loop which
+  // monitors WiFi.status() != WL_CONNECTED and attempts a more serious
+  // reconnect.
+  WiFi.mode(WIFI_STA);
+  WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE);
   WiFi.setHostname(WIFI_HOSTNAME);
+  WiFi.setSleep(false);
+  WiFi.setAutoReconnect(true);
+
+  // Connect to WiFi using the password from "secrets.ini".
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   logMessage("Attempting Wi-Fi connection to: " + String(WIFI_SSID));
+
+  // Wait for the initial WiFi connection for up to 15 seconds (200ms delay
+  // inside the loop). Even after this loop, it will still try to connect
+  // and/or reconnect. Blink the LED faster while it is still trying to connect
+  // to WiFi. This way, while looking at the board, I can see how quickly it
+  // connects to WiFi without having to look at the log file in the browser.
+  // TODO: if I ever implement a WiFi watchdog, make this part of the watchdog
+  // instead of blocking the startup (simply blink the LED faster whenever the
+  // WiFi is not connected).
   int timeout = 0;
-  while (WiFi.status() != WL_CONNECTED && timeout < 20)
+  while (WiFi.status() != WL_CONNECTED && timeout < 75)
   {
-    // Blink LED faster while it is still trying to connect to WiFi.
     analogWrite(ONBOARD_LED, ONBOARD_LED_BRIGHTNESS);
     ledIsOn = true; 
     delay(100);
@@ -662,32 +681,33 @@ void setup_networking()
     delay(100);
     timeout++;
   }
-
-  // Start the web server.
   if (WiFi.status() == WL_CONNECTED)
   {
     logMessage("Wi-Fi Connection online.");
-    
-    if (MDNS.begin(WIFI_HOSTNAME))
-    {
-      logVerbose("mDNS identity registered: http://" + String(WIFI_HOSTNAME) + ".local");
-    }
-    
-    server.on("/", HTTP_GET, handle_root_request);
-    server.on("/reboot", HTTP_POST, handle_reboot_request);
-    server.on("/pulsePower", HTTP_POST, handle_pulse_request);
-
-    server.begin();
-    logMessage("Logging Service online at http://" + String(WIFI_HOSTNAME) + ".local");
   }
   else
   {
     logMessage("Wi-Fi Link registration failed. Operating in hardware fallback loop.");
   }
 
-  // Activate up OTA WiFi Firmware Updates. Note that I must set the hostname
-  // yet again here, because for some reason, the OTA functions trounce on the
-  // host name that I already set before.
+  // Start the web server regardless of whether WiFi successfully connected.
+  // That way, if the WiFi eventually connects, it'll be there waiting. This
+  // fixes a small secondary part of GitHub issue #2, where I noticed that, in
+  // one case, the ESP32 connected to the WiFi but I couldn't see its web
+  // page.
+  if (MDNS.begin(WIFI_HOSTNAME))
+  {
+    logVerbose("mDNS identity registered: http://" + String(WIFI_HOSTNAME) + ".local");
+  }
+  server.on("/", HTTP_GET, handle_root_request);
+  server.on("/reboot", HTTP_POST, handle_reboot_request);
+  server.on("/pulsePower", HTTP_POST, handle_pulse_request);
+  server.begin();
+  logMessage("Logging Service online at http://" + String(WIFI_HOSTNAME) + ".local");
+
+  // Activate OTA WiFi Firmware Updates. Note that I must set the hostname yet
+  // again here, because for some reason, the OTA functions trounce on the host
+  // name that I already set before.
   ArduinoOTA.setHostname(WIFI_HOSTNAME); 
   ArduinoOTA.setPort(3232);
   ArduinoOTA.setPassword(OTA_PASSWORD);    
