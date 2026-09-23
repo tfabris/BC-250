@@ -225,7 +225,7 @@ Components
   
   | ![](../Photos/TPMS1%20Connection%2001.jpg) **TPMS1 Connection** | ![](../Photos/TPMS1%20Connection%2002.jpg) **TPMS1 Connection** |
   |:---------------------------------------------------------------:|:---------------------------------------------------------------:|
-  | ![](../Photos/TPMS1%20Connection%2003.jpg) **TPMS1 Pin**        |
+  | ![](../Photos/TPMS1%20Connection%2003.jpg) **TPMS1 "3V" Pin**   |
 
 #### USB C-to-A cable:
 
