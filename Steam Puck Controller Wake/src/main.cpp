@@ -73,7 +73,7 @@ const char* WIFI_HOSTNAME = "SteamPuckControllerWake";
 #define STEAM_CONTROLLER_PID 0x1304
 #define MAIN_LOOP_DELAY_MS 10
 #define MAX_LOG_LINES 150 // Number of most-recent log lines visible in the HTML log.
-#define MAX_LOG_LINE_LENGTH 175 // Max length a single timestamped log line can be.
+#define MAX_LOG_LINE_LENGTH 190 // Max length a single timestamped log line can be.
 
 // The 2026 Steam Controller USB puck has five "interfaces" (low level
 // communication endpoints) that it exposes to the USB system that speaks to
@@ -180,7 +180,8 @@ void logVerbose(const String &text)
 }
 
 // ============================================================================
-// Logs the status of the Select and Power Sense GPIO pins.
+// Logs the status of the Select and Power Sense GPIO pins and flags if either
+// one has changed recently (three asterisks).
 // ============================================================================
 void logPinStatus(bool force = false)
 {
@@ -244,12 +245,17 @@ void logDiagnostics()
   // Note that this is the temp of the ESP32 chip, not the temp of the BC-250.
   float chipTempCelsius = temperatureRead();
 
+  // Log the GPIO pin status of the select and sense pins.
+  selectPinReadState = digitalRead(SELECT_PIN);
+  sensePinReadState = digitalRead(POWER_SENSE_PIN);
+
   // Print the diagnostic data.  
   char diagBuffer[200];
   snprintf(
     diagBuffer, sizeof(diagBuffer),
-      "Uptime: %lud %luh %lum %lus | RAM: %u | Min RAM: %u | Frag: %u | Loop Stack: %u | USB Lib Stack: %u | USB Client Stack: %u | Temp: %.1f &deg;C",
+      "Uptime: %lud %luh %lum %lus | POW:%u SEL:%u | RAM: %u | Min RAM: %u | Frag: %u | Loop Stack: %u | USB Lib Stack: %u | USB Client Stack: %u | Temp: %.1f &deg;C",
       days, hours % 24, mins % 60, secs,
+      sensePinReadState, selectPinReadState,
       freeHeap, minFreeHeap, maxAllocHeap, 
       loopStack, usbLibStack, usbClientStack,
       chipTempCelsius
@@ -580,12 +586,23 @@ void init_usb_host_subsystem()
 // ============================================================================
 String build_html_page()
 {
-  String html = "<html><head><title>Steam Puck Controller Wake Device - Logs</title>";
+  String html = "";
+  html += "<html><head>";
+  html += "<title>Steam Puck Controller Wake Device - Logs</title>";
   html += "<meta http-equiv='refresh' content='2'>"; 
-  html += "<style>body{font-family:monospace;background:#1e1e1e;color:#d4d4d4;padding:10px;}";
-  html += "h1{color:#4fc1ff;} pre{background:#2d2d2d;padding:5px;border-radius:5px;}</style></head>";
-  html += "<body><h1>Steam Puck Controller Wake Device - Logs</h1><button onclick=\"fetch('/reboot', {method:'POST'})\">Reboot</button>&nbsp;&nbsp;<small>(Reboots the ESP32 Wake Device, not the game console.)</small>";
-  html += "<pre>" + get_logs_html() + "</pre></body></html>";
+  html += "<style>";
+  html += "body{font-family:monospace;background:#1e1e1e;color:#d4d4d4;padding:5px;} h1{color:#4fc1ff;}";
+  html += "pre{background:#2d2d2d;padding:5px;border-radius:5px;display:inline-block;white-space:pre;overflow:visible;}";
+  html += "td{background-color:#2d2d2d;text-align:center;vertical-align:middle;padding:5px 15px;border-radius:5px;}";
+  html += "</style></head>";
+  html += "<body><h1>Steam Puck Controller Wake Device - Logs</h1>";
+  html += "<table><tr>";
+  html += "<td><button onclick=\"fetch('/reboot', {method:'POST'})\">Reboot ESP32</button><br /><small>(Reboots the Wake Device, not the console.)</small></td>";
+  html += "<td style=\"width:10px;background-color:#1e1e1e;\"></td>";
+  html += "<td><button onclick=\"fetch('/pulsePower', {method:'POST'})\">Pulse Power Button</button><br /><small>(Presses the console power button.)</small></td>";
+  html += "</tr></table>";
+  html += "<pre>" + get_logs_html() + "</pre>";
+  html += "</body></html>";
   return html;
 }
 
@@ -607,6 +624,23 @@ void handle_reboot_request(AsyncWebServerRequest *request)
   request->send(200, "text/plain", "OK");
   shouldReboot = true;
 }
+
+// ============================================================================
+// There is a "pulse" button on the web page which calls this function. It
+// pulses the power button as if you had turned on the controller. Can be used
+// to turn the BC-250 on and off remotely from WiFi.
+// ============================================================================
+void handle_pulse_request(AsyncWebServerRequest *request)
+{
+  request->send(200, "text/plain", "OK");
+  logMessage("******************************************************************************");
+  logMessage("***** Pulse Button Request Received from Web Page. Pulsing Power Button. *****");
+  logMessage("******************************************************************************");
+  digitalWrite(POWER_ON_PULSE_PIN, HIGH);
+  delay(500);
+  digitalWrite(POWER_ON_PULSE_PIN, LOW);  
+}
+
 
 // ============================================================================
 // Initialize the WiFi connection.
@@ -641,6 +675,7 @@ void setup_networking()
     
     server.on("/", HTTP_GET, handle_root_request);
     server.on("/reboot", HTTP_POST, handle_reboot_request);
+    server.on("/pulsePower", HTTP_POST, handle_pulse_request);
 
     server.begin();
     logMessage("Logging Service online at http://" + String(WIFI_HOSTNAME) + ".local");
