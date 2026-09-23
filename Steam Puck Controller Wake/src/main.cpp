@@ -55,7 +55,7 @@
 //
 //     [secrets]
 //     wifi_ssid = "Your WiFi Network Name"
-//     wifi_pass = "Your WiFi" Network Password"
+//     wifi_pass = "Your WiFi Network Password"
 //     ota_pass = "Your Desired Firmware Update Password"
 //
 const char* WIFI_SSID = SECRET_WIFI_SSID;
