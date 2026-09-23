@@ -240,7 +240,7 @@ Because I only intended to make one of these, I did not design a printed circuit
 
 The perfboard I used is this snappable board. It comes as a 3.5" x 3.8" board which snaps into four pieces, each piece making a 1.75" x 1.9" board: https://www.amazon.com/dp/B081QYPHHP
 
-This device is intended to sit inside my [BC-250 case](../Case/README.md), so after construction, I wrapped some gaffer tape around it to help prevent it from grounding out in there.
+This device is intended to sit inside my [BC-250 case](../Case/README.md), so after construction, I wrapped some gaffer tape around it to help prevent it from grounding out in there. I specifically used **gaffer** tape because it doesn't leave a sticky residue like duct tape or other kinds of tape.
 
 | ![](../Photos/Wake%20Circuit%2003.jpg) **The Mux Hides Under the USB-C** | ![](../Photos/Wake%20Circuit%20Wrapped.jpg) **Gaffer Tape** |
 |:------------------------------------------------------------------------:|:-----------------------------------------------------------:|
