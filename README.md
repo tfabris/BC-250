@@ -500,7 +500,7 @@ By the way, these version numbers are just unix datestamps, you can convert them
 
 ### Display CPU/GPU temperatures in Steam Performance Overlay
 
-While gaming, press the three-dots button on the Steam controller (or press Ctrl-Shift-Tab on the keyboard), select the lighting bolt icon and choose level 3 or level 4 of the performance overlay. Temperatures should be displayed there. It doesn't have your motherboard temperature, just CPU and GPU, but I tried adding the motherboard temp to it, and the Google suggestions messed up the overlay and caused all sorts of problems. Recommend keeping the overlay at its default settings and just using Level 3 to display CPU and GPU temperature.
+While gaming, press the three-dots button on the Steam controller (or press Ctrl-Shift-Tab on the keyboard), select the lightning bolt icon and choose level 3 or level 4 of the performance overlay. Temperatures should be displayed there. It doesn't have your motherboard temperature, just CPU and GPU, but I tried adding the motherboard temp to it, and the Google suggestions messed up the overlay and caused all sorts of problems. Recommend keeping the overlay at its default settings and just using Level 3 to display CPU and GPU temperature.
 
 
 ### Bluetooth Pairing
