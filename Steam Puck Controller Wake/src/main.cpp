@@ -589,7 +589,6 @@ String build_html_page()
   String html = "";
   html += "<html><head>";
   html += "<title>Steam Puck Controller Wake Device - Logs</title>";
-  html += "<meta http-equiv='refresh' content='2'>"; 
   html += "<style>";
   html += "body{font-family:monospace;background:#1e1e1e;color:#d4d4d4;padding:5px;} h1{color:#4fc1ff;}";
   html += "pre{background:#2d2d2d;padding:5px;border-radius:5px;display:inline-block;white-space:pre;overflow:visible;}";
@@ -601,7 +600,28 @@ String build_html_page()
   html += "<td style=\"width:10px;background-color:#1e1e1e;\"></td>";
   html += "<td><button onclick=\"if(confirm('Are you sure?')){fetch('/pulsePower', {method:'POST'})}\">Pulse Power Button</button><br /><small>(Presses the console power button.)</small></td>";
   html += "</tr></table>";
-  html += "<pre>" + get_logs_html() + "</pre>";
+  html += "<pre id='log-viewer'>" + get_logs_html() + "</pre>";
+
+  // Special javascript code that only updates the logs in the browser when they
+  // have changed. This allows users to select and copy the log text without
+  // their selection cursor disappearing every few seconds. Users may still
+  // have a tough time if the logs are verbose and are updating quickly.
+  html += "<script>"
+          "let lastLogData = '';" // Save the displayed log, to test if it changed.
+          ""
+          "setInterval(function() {"
+          "    fetch('/logs')"
+          "        .then(response => response.text())"
+          "        .then(data => {"
+          "            /* Compare raw server data directly with the cached string */"
+          "            if (data !== lastLogData) {"
+          "                lastLogData = data;" // Update the saved version.
+          "                document.getElementById('log-viewer').innerHTML = data;" // Update the text only when it changed.
+          "            }"
+          "        })"
+          "        .catch(err => console.error('Error fetching logs:', err));"
+          "}, 1000);" // Log refresh time in milliseconds.
+          "</script>";
   html += "</body></html>";
   return html;
 }
@@ -702,6 +722,7 @@ void setup_networking()
   server.on("/", HTTP_GET, handle_root_request);
   server.on("/reboot", HTTP_POST, handle_reboot_request);
   server.on("/pulsePower", HTTP_POST, handle_pulse_request);
+  server.on("/logs", HTTP_GET, [](AsyncWebServerRequest *request){ request->send(200, "text/plain", get_logs_html()); });
   server.begin();
   logMessage("Logging Service online at http://" + String(WIFI_HOSTNAME) + ".local");
 
