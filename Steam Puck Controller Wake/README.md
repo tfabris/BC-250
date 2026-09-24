@@ -327,7 +327,7 @@ Create a text file in the project folder alongside all the other files that you 
     wifi_pass = "YourWiFiNetworkPassword"
     ota_pass = "SomePasswordYouInvent"
 
-Obviously, replace the names and passwords with something of your own. This file will allow the ESP32-S2 chip to connect to your WiFi network so that you can view its logs, and later, so that you can upload new source code to it via WiFi.
+Obviously, replace the names and passwords with something of your own. This file will allow the ESP32-S2 chip to connect to your WiFi network so that you can view its logs, and later, so that you can upload new firmware to it via WiFi. The "ota_pass" variable is what protects the over-the-air (OTA) firmware updates.
 
 ### Build the source code
 
