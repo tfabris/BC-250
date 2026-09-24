@@ -597,9 +597,9 @@ String build_html_page()
   html += "</style></head>";
   html += "<body><h1>Steam Puck Controller Wake Device - Logs</h1>";
   html += "<table><tr>";
-  html += "<td><button onclick=\"fetch('/reboot', {method:'POST'})\">Reboot ESP32</button><br /><small>(Reboots the Wake Device, not the console.)</small></td>";
+  html += "<td><button onclick=\"if(confirm('Are you sure?')){fetch('/reboot', {method:'POST'})}\">Reboot ESP32</button><br /><small>(Reboots the Wake Device, not the console.)</small></td>";
   html += "<td style=\"width:10px;background-color:#1e1e1e;\"></td>";
-  html += "<td><button onclick=\"fetch('/pulsePower', {method:'POST'})\">Pulse Power Button</button><br /><small>(Presses the console power button.)</small></td>";
+  html += "<td><button onclick=\"if(confirm('Are you sure?')){fetch('/pulsePower', {method:'POST'})}\">Pulse Power Button</button><br /><small>(Presses the console power button.)</small></td>";
   html += "</tr></table>";
   html += "<pre>" + get_logs_html() + "</pre>";
   html += "</body></html>";
