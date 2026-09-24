@@ -65,7 +65,7 @@ You might need to modify the case design in Blender for various reasons. I would
 
 - The rear panel hole is carved to match the vents on my ATX power supply, which is a "Be Quiet!" brand [Pure Power 13](https://www.amazon.com/dp/B0FBX9VS3B). Yours may need a different shape for that hole.
 - The screw standoffs which hold the perfboard to the front of the case might need to change diameter or depth to match the screws, the perfboard, and the buttons that you're using.
-- ***IMPORTANT:*** There are a lot of boolean modifier operations in this file. Don't move an object out of place without ensuring that its corresponding boolean is moving correctly along with it.
+- ***IMPORTANT:*** There are a lot of boolean modifier operations which are still live boolean meshes; they haven't been "applied" to the objects yet. Leaving them live allows for more modifications to be made. But use care when editing: Don't move an object out of place without ensuring that its corresponding boolean objects are moving correctly along with it.
 
 
 ### Select and Export Objects
@@ -297,10 +297,10 @@ The inserts go into the **front** of the case, into the existing provided holes,
 - It's important to use very small pieces of Alien Tape, because it is very strong, and because the badge still needs to move a little bit to actuate the buttons.
 - The badge should be slightly loose in its hole, the LEDs should be slightly loose in the holes in the back of the badge, and the badge should be able to rock up and down. The Alien Tape squares are the fulcrum of its rocking motion. Pressing the top or the bottom of the badge should click the corresponding pushbutton on the LED controller.
 
-| ![](../Photos/Badge%20with%20Board%2001.jpg) **LED / Badge Parts**   | ![](../Photos/Badge%20with%20Board%2002.jpg) **Test Fit Everything** |
-|:--------------------------------------------------------------------:|:--------------------------------------------------------------------:|
-|  ![](../Photos/LED%20Circuit%2001.jpg) **Four M2 Screws**            |   ![](../Photos/LED%20Board%20Mounted.jpg) **Mounted in Case**       |
-| ![](../Photos/Badge%20Alien%20Tape.jpg) **Alien Tape in Rect. Gaps** |  ![](../Photos/Installing%20Badge.jpg)     **Install Carefully**     |
+| ![](../Photos/Badge%20with%20Board%2001.jpg) **LED / Badge Parts**         | ![](../Photos/Badge%20with%20Board%2002.jpg) **Test Fit Everything** |
+|:--------------------------------------------------------------------------:|:--------------------------------------------------------------------:|
+|  ![](../Photos/LED%20Circuit%2001.jpg) **Four M2 Screws**                  |   ![](../Photos/LED%20Board%20Mounted.jpg) **Mounted in Case**       |
+| ![](../Photos/Badge%20Alien%20Tape.jpg) **Alien Tape in Rectangluar Gaps** |  ![](../Photos/Installing%20Badge.jpg)     **Install Carefully**     |
 
 
 ### Prepare for the final case closure
