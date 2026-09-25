@@ -211,7 +211,7 @@ Assembly
 
 ### Install back side heat sink
 
-The back side of the BC-250 is a blank metal plate which covers up the RAM chips. To ensure those components don't overhead under heavy load, use thermal epoxy to permanently glue a plain heat sink to the blank metal plate. 
+The back side of the BC-250 is a blank metal plate which covers up the RAM chips. To ensure those components don't overheat under heavy load, use thermal epoxy to permanently glue a plain heat sink to the blank metal plate. 
 
 - The heat sink I used was 150x120x20mm: https://www.amazon.com/dp/B0C7RTSM6S
 - I carefully measured and cut four holes into the heat sink so that I could still access the mounting screws in the future.
