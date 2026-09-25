@@ -388,6 +388,11 @@ This should permanently enable remote SSH logins to the system. Afterwards, ente
 
 Being able to SSH into the BC-250 is very nice because it works even when the BC-250 is in "Gaming Mode", sitting on the Steam Big Picture screen. It allows you to remotely issue terminal commands and do other kinds of various maintenance to it. Almost all of the terminal commands listed elsewhere in this document can be done from the remote SSH shell.
 
+If you want to try passwordless SSH, so that you aren't prompted for the SSH password every time, you can set up a key exchange between your computer and the BC-250. Here are the commands that worked for my Mac. I had to answer some prompts at each step:
+
+    ssh-keygen -t ed25519
+    ssh-copy-id UserName@NameOfMyBC250
+
 
 ### Enable file sharing on Bazzite
 
@@ -406,14 +411,21 @@ Being able to SSH into the BC-250 is very nice because it works even when the BC
 
 ### Remotely switch to desktop/gaming mode
 
-If you are logged into to the remote SSH shell, and you want to switch the machine from gaming mode (Steam Big Picture mode) and go to desktop mode issue this command:
+If you are logged into to the remote SSH shell, and you want to switch the machine from gaming mode to desktop mode, issue either of these commands:
 
     steamos-session-select plasma
+    
+    # or...
+    
+    steamosctl switch-to-desktop-mode
 
-And the reverse, going into gaming mode from desktop mode:
+And the reverse, switching to gaming mode:
 
     steamos-session-select gamescope
-
+    
+    # or...
+    
+    steamosctl switch-to-game-mode
 
 ### Install BC-250 Control Center on Bazzite
 
