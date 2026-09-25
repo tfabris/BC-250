@@ -406,7 +406,7 @@ If you want to try passwordless SSH, so that you aren't prompted for the SSH pas
 
   If you are connecting to it from a MacOS computer, do it by opening finder, choosing "Connect to Server" from its menu, and entering the machine's address in the following format:
 
-      smb://UserName@NameOfMyBC250.local/
+      smb://UserName@NameOfMyBC250.local/UserName
 
 
 ### Remotely switch to desktop/gaming mode
@@ -490,24 +490,21 @@ Use CURL and GREP at the console to parse out the version numbers without having
 
       curl -s https://client-update.steamstatic.com/steam_client_publicbeta_ubuntu12 | grep -o '"version"[[:space:]]\+"[0-9]\+"' | grep -o '[0-9]\+'
 
-
 #### A script to automatically check for me
 
-Save this script to your home folder as `SteamVersion.sh`, do a `chmod +x SteamVersion.sh` and run it with `./SteamVersion.sh`:
-- [SteamVersion.sh](SteamVersion.sh)
+Place this script in your user's $HOME folder, and set it to executable with this command:
 
+     chmod +x SteamVersion.sh
+
+Then add it to Steam as a "Non-Steam" game. In the "Target" box, put this:
+
+     env -u LD_PRELOAD -u LD_AUDIT konsole -e "$HOME/SteamVersion.sh" & exit
 
 #### Version Number Format
 
-By the way, these version numbers are just unix datestamps, you can convert them to a date string with a command like this if you want:
+By the way, these version numbers are just Unix datestamps, you can convert them to a date string with a command like this if you want:
 
          date -d @1788652215 -u
-
-
-
-
-
-
 
 
 ### Display CPU/GPU temperatures in Steam Performance Overlay
