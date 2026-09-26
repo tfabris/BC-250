@@ -43,7 +43,7 @@ The BC-250 is missing one of the features that a Steam Machine has: The ability 
 
 This uses an ESP32-S2 Mini module, combined with a TS3USB221 USB Multiplexer board, to allow you to wake up your BC-250 when you turn on your 2026 Steam controller.
 
-The ESP32 code in this circuit is specifically designed to work with a 2026 Steam Controller Puck. Currently it does not work with any other kind of controller. Theoretically, if you had the knowledge, you could modify the code yourself and make it accept other kinds of game controllers. Let me know if you're successful at that.
+The ESP32 code in this circuit is specifically designed to work with a 2026 Steam Controller Puck. Currently it does not work with any other kind of controller. Theoretically, if you had the knowledge, you could modify the code yourself and make it accept other kinds of game controllers. Let me know if you're successful at that. If you want your BC-250 to wake up from a Bluetooth controller, there is another project which can do that, found here: https://github.com/GreatApo/BC250_ESP32_ATX_PSU
 
 Potentially, you could also modify the electronic circuit in this design so that it could wake up a different kind of gaming computer other than a BC-250, but the instructions here are just for a BC-250.
 
