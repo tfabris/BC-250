@@ -14,10 +14,10 @@ A 3D Printed case for a BC-250 gaming system, with a full sized ATX power supply
 
 Project Links
 -------------
-- [Main Project Details](         ../README.md)
-- [LED Controller](               ../LED%20Controller/README.md)
-- [Steam Puck Controller Wake](   ../Steam%20Puck%20Controller%20Wake/README.md)
-- [Case](                         ../Case/README.md)
+[Main Project Details](                ../README.md)  
+`    ├──`[LED Controller](             ../LED%20Controller/README.md)  
+`    ├──`[Steam Puck Controller Wake]( ../Steam%20Puck%20Controller%20Wake/README.md)  
+`    └──`[Case](                       ../Case/README.md) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← *You Are Here*  
 
 
 Table of Contents
