@@ -279,10 +279,10 @@ The inserts go into the **front** of the case, into the existing provided holes,
 - Ensure the two rear corners of the BC-250's green PCB are seated in the mounting slots, and that the middle lower PCB protrusion near the power connector is in its mounting slot.
 - Make sure that no wires get crunched as you're slotting it into place. In particular, make sure that the wires soldered to the power button pins or connected to the TPMS1 connector don't get yanked out.
 
-| ![](../Photos/Back%20Panel%20USB%20Cable%2001.jpg) **Controller Wake** | ![](../Photos/Lower%20Middle.jpg) **Middle Lower Mount**   |
-|:----------------------------------------------------------------------:|:----------------------------------------------------------:|
-| ![](../Photos/Rear%20Upper.jpg) **Rear Upper Mount**                   | ![](../Photos/Rear%20Lower.jpg) **Rear Lower Mount**       | 
-| ![](../Photos/ATX.jpg) **ATX Mounted**                                 | ![](../Photos/Back%20Panel%20USB%20Cable%2002.jpg) **I/O** |
+| ![](../Photos/Back%20Panel%20USB%20Cable%2001.jpg) **Controller Wake Notch** | ![](../Photos/Lower%20Middle.jpg) **Middle Lower Mount**   |
+|:----------------------------------------------------------------------------:|:----------------------------------------------------------:|
+| ![](../Photos/Rear%20Upper.jpg) **Rear Upper Mount**                         | ![](../Photos/Rear%20Lower.jpg) **Rear Lower Mount**       | 
+| ![](../Photos/ATX.jpg) **ATX Mounted**                                       | ![](../Photos/Back%20Panel%20USB%20Cable%2002.jpg) **I/O** |
 
 
 ### Install the badge and LED circuit
