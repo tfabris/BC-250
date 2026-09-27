@@ -493,7 +493,11 @@ Use CURL and GREP at the console to parse out the version numbers without having
 
 #### A script to automatically check for me
 
-Place this script in your user's $HOME folder, and set it to executable with this command:
+Included in this repository is my script for this puporse. I can launch it from Steam Big Picture mode, even, if I give it the right launch parameters:
+
+- [SteamVersion.sh](SteamVersion.sh)
+
+Place the script in your user's $HOME folder, and set it to executable with this command:
 
      chmod +x SteamVersion.sh
 
