@@ -19,10 +19,10 @@ Building a budget gaming console out of an ASRock BC-250 crypto mining card. It 
 
 Project Links
 -------------
-[Main Project Details](                                                    README.md) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← *You Are Here*  
-<font face=monospace>&nbsp;&nbsp;├──</font>[LED Controller](               LED%20Controller/README.md)  
-<font face=monospace>&nbsp;&nbsp;├──</font>[Steam Puck Controller Wake](   Steam%20Puck%20Controller%20Wake/README.md)  
-<font face=monospace>&nbsp;&nbsp;└──</font>[Case](                         Case/README.md)  
+[Main Project Details](                README.md) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← *You Are Here*  
+`    ├──`[LED Controller](             LED%20Controller/README.md)  
+`    ├──`[Steam Puck Controller Wake]( Steam%20Puck%20Controller%20Wake/README.md)  
+`    └──`[Case](                       Case/README.md)  
 
 
 Table of Contents
