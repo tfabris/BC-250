@@ -44,7 +44,7 @@ echo ""
 
 # Steam's local bootstrap log file which contains the information we need, which
 # is the locally installed version number, and whether or not we have opted-in
-# to be part of the Steam Public Beta program.# .
+# to be part of the Steam Public Beta program.
 LOG_FILE="$HOME/.local/share/Steam/logs/bootstrap_log.txt"
 
 # The amount of time, in seconds, to pause and wait for the user to read the
