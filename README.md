@@ -493,7 +493,7 @@ Use CURL and GREP at the console to parse out the version numbers without having
 
 #### A script to automatically check for me
 
-Included in this repository is my script for this puporse. I can launch it from Steam Big Picture mode, even, if I give it the right launch parameters:
+Included in this repository is my script for this purpose. I can even launch it from Steam Big Picture mode, if I give it the right launch parameters:
 
 - [SteamVersion.sh](SteamVersion.sh)
 
