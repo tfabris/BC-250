@@ -464,7 +464,7 @@ The above did not fix the issue, my client is still in a permanent "updates avai
 
 ### Check if your Steam client is updated
 
-Since I'm still having problems, where Steam permanently says "Updates available" even when it's up to date, sometimes I want to know if my Steam client really is updated or not. This is how to find out for sure:
+Since I'm still having problems, where Steam intermittently gets stuck saying "Updates available" even when it's up to date, sometimes I want to know if my Steam client really is updated or not. This is how to find out for sure:
 
 #### By hand
 
