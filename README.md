@@ -507,7 +507,7 @@ Then add it to Steam as a "Non-Steam" game. In the "Target" box, put this:
 
 #### Version Number Format
 
-By the way, these version numbers are just Unix datestamps, you can convert them to a date string with a command like this if you want:
+By the way, the version numbers are just Unix datestamps, you can convert them to a date string with a command like this if you want:
 
          date -d @1788652215 -u
 
