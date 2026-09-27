@@ -16,10 +16,10 @@ This was inspired by an original design by Martin Juhl Prendergast, but I made s
 
 Project Links
 -------------
-- [Main Project Details](      ../README.md)
-- [LED Controller](            ../LED%20Controller/README.md)
-- [Steam Puck Controller Wake](../Steam%20Puck%20Controller%20Wake/README.md)
-- [Case](                      ../Case/README.md)
+[Main Project Details](                ../README.md)  
+`    ├──`[LED Controller](             ../LED%20Controller/README.md)  
+`    ├──`[Steam Puck Controller Wake]( ../Steam%20Puck%20Controller%20Wake/README.md) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← *You Are Here*  
+`    └──`[Case](                       ../Case/README.md)  
 
 
 Table of Contents
