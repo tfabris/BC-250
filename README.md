@@ -459,7 +459,7 @@ I occasionally get into situations where Steam has the little yellow exclamation
     rm -rf ~/.steam/steam/package/*
     rm -rf ~/.steam/steam/appcache/*
 
-The above did not fix the issue, my client is still in a permanent "updates available" loop. Still trying to debug this issue!
+The above did not fix the issue, my client still sometimes gets stuck in a permanent "updates available" loop, even if I perform the above steps, and update both Bazzite and Steam independently. I'm still trying to debug this issue.
 
 
 ### Check if your Steam client is updated
