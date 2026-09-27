@@ -3526,7 +3526,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "5c8fe6e7-ec94-40c4-acd4-6e810050e1de")
-		(property "Reference" "Blue2_LED_High_Power"
+		(property "Reference" "Blue1_LED_Low_Power"
 			(at 133.096 79.756 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3599,7 +3599,7 @@
 		(instances
 			(project "BC-250 LED Controller"
 				(path "/020da3e5-9289-483e-acf0-9488f4973bf9"
-					(reference "Blue2_LED_High_Power")
+					(reference "Blue1_LED_Low_Power")
 					(unit 1)
 				)
 			)
@@ -4147,7 +4147,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "ad53bab0-a748-4480-8178-0441db85973d")
-		(property "Reference" "Blue2_Control_Transitor"
+		(property "Reference" "Blue1_Control_Transitor"
 			(at 133.35 58.4201 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4272,7 +4272,7 @@
 		(instances
 			(project "BC-250 LED Controller"
 				(path "/020da3e5-9289-483e-acf0-9488f4973bf9"
-					(reference "Blue2_Control_Transitor")
+					(reference "Blue1_Control_Transitor")
 					(unit 1)
 				)
 			)
@@ -4290,7 +4290,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "af49a63f-c8b8-44b6-b46d-eb7a00a2ae08")
-		(property "Reference" "Blue1_Control_Transistor"
+		(property "Reference" "Blue2_Control_Transistor"
 			(at 49.53 58.4201 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4415,7 +4415,7 @@
 		(instances
 			(project "BC-250 LED Controller"
 				(path "/020da3e5-9289-483e-acf0-9488f4973bf9"
-					(reference "Blue1_Control_Transistor")
+					(reference "Blue2_Control_Transistor")
 					(unit 1)
 				)
 			)
@@ -4432,7 +4432,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b2c76aa6-4c09-4b9d-a5b0-fb26874fa16a")
-		(property "Reference" "Blue1_LED_Low_Power"
+		(property "Reference" "Blue2_LED_High_Power"
 			(at 59.436 80.01 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4505,7 +4505,7 @@
 		(instances
 			(project "BC-250 LED Controller"
 				(path "/020da3e5-9289-483e-acf0-9488f4973bf9"
-					(reference "Blue1_LED_Low_Power")
+					(reference "Blue2_LED_High_Power")
 					(unit 1)
 				)
 			)
