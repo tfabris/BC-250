@@ -117,8 +117,8 @@ Components
 
 #### LEDs:
 
-  - Blue 3.2fv LED (x2)   - Or whatever colors and voltages you like.
-  - Yellow 2.0fv LED (x1) - Or whatever colors and voltages you like.
+  - Blue 3.2fv LED, 5mm (x2)   - Or whatever colors and voltages you like.
+  - Yellow 2.0fv LED, 5mm (x1) - Or whatever colors and voltages you like.
 
 #### D1, D2:
 
