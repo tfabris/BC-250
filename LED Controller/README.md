@@ -11,10 +11,10 @@ A small circuit to control three LEDs on the front of my BC-250 case. I am using
 
 Project Links
 -------------
-- [Main Project Details](      ../README.md)
-- [LED Controller](            ../LED%20Controller/README.md)
-- [Steam Puck Controller Wake](../Steam%20Puck%20Controller%20Wake/README.md)
-- [Case](                      ../Case/README.md)
+[Main Project Details](                ../README.md)  
+`    ├──`[LED Controller](             ../LED%20Controller/README.md) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← *You Are Here*  
+`    ├──`[Steam Puck Controller Wake]( ../Steam%20Puck%20Controller%20Wake/README.md)  
+`    └──`[Case](                       ../Case/README.md)  
 
 
 Table of Contents
