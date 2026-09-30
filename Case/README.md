@@ -51,7 +51,7 @@ Refer to the following file in this repository (open it in Blender):
 
 - "BC-250 Case.blend"
 
-I have included the original Blender working file, to make it easier to make any desired modifications before printing. I'm still on Blender version 3.2, so your steps might differ.
+I have included the original Blender working file, to make it easier to make any desired modifications before printing. I'm still on Blender version 3.6, so your steps might differ.
 
 ### 3D Print Toolbox Add-On
 
