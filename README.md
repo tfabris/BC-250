@@ -529,9 +529,9 @@ While gaming, press the three-dots button on the Steam controller (or press Ctrl
 
 #### Pairing Keyboards
 
-Trying to pair a keyboard from the Steam UI gives you guff. This happens because Steam doesn't know how to prompt the user to enter a PIN code when pairing a keyboard. This is an egregious and unforgivable bug in Steam. It caused me no end of trouble until I realized that the whole problem was simply due to the lack of a PIN prompt in Steam.
+Trying to pair a keyboard from the Steam UI gives you guff. This happens because Steam doesn't know how to prompt the user to enter a PIN code when pairing a keyboard. At the time of this writing, this was a bug in Steam (and thus could be fixed by the time you read this). This caused me no end of trouble, until I realized that the whole problem was simply due to the lack of a PIN prompt in Steam.
 
-Instead, Pair your keyboard from desktop mode, in Bazzite's main settings screen:
+If you have trouble pairing a keyboard while in Steam Big Picture mode, instead, try pairing your keyboard from desktop mode, in Bazzite's main settings screen:
   - Switch to Desktop Mode.
   - Open Bazzite system settings.
   - Open the Bluetooth settings, click on "+ Pair Device" and check the "Show Unnamed Devices" checkbox.
@@ -647,7 +647,7 @@ When you are in Bazzite's Gaming Mode (in Steam Big Picture), and from there, yo
 
 The Steam Controller is supposed to let you control your mouse, even in Desktop Mode. Which it does, normally. But on my system, I have configured Steam so that it prompts for which user is logging in (me or my girlfriend). This means that each time Steam launches, it doesn't fully load Steam at first, it sits there on a prompt asking to choose which user is logging in.
 
-There is a bug in Steam with this user prompt: In Bazzite's Gaming Mode, the Steam Controller works fine during that prompt. But when you switch to Bazzite's Desktop Mode, the Desktop version of Steam prompts for the user, and for some reason, ***the Steam Controller is not working yet.*** You cannot answer the user login with the Steam Controller, when in Desktop mode. This is yet another egregious unfixed bug in Steam.
+There is a bug in Steam with this user prompt: In Bazzite's Gaming Mode, the Steam Controller works fine during that prompt. But when you switch to Bazzite's Desktop Mode, the Desktop version of Steam prompts for the user, and for some reason, ***the Steam Controller is not working yet.*** You cannot answer the user login with the Steam Controller, when in Desktop mode. 
 
 Solution:
 - Hold the Steam button and swipe the right trackpad, to make the mouse cursor appear.
@@ -655,7 +655,7 @@ Solution:
 
 After you select the desired user, the Steam Controller starts working normally again and you can control the mouse pointer with it, without needing to hold the Steam button any more.
 
-I don't have a better, more permanent solution for this at the moment.
+**Update:** I think this might be fixed in the Steam Client Beta branch at the time of this writing. By the time you read this, it might not be an issue any more. But I have run into other situations where needing to know this secret handshake (Hold Steam button while swiping the right trackpad) is necessary, so it's a good thing to have in your skill set anyway.
 
 ### Problem when the user selects "Sleep"
 
