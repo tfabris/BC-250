@@ -655,7 +655,7 @@ Solution:
 
 After you select the desired user, the Steam Controller starts working normally again and you can control the mouse pointer with it, without needing to hold the Steam button any more.
 
-**Update:** I think this might be fixed in the Steam Client Beta branch at the time of this writing. By the time you read this, it might not be an issue any more. But I have run into other situations where needing to know this secret handshake (Hold Steam button while swiping the right trackpad) is necessary, so it's a good thing to have in your skill set anyway.
+**Update:** I think this might be fixed in the Steam Client Beta branch at the time of this writing. By the time you read this, it might not be an issue any more. But I have run into other situations where needing to know this secret handshake (hold Steam button while swiping the right trackpad) is necessary, so it's a good thing to have in your skill set anyway.
 
 ### Problem when the user selects "Sleep"
 
