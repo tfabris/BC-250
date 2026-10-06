@@ -74,6 +74,7 @@ const char* WIFI_HOSTNAME = "SteamPuckControllerWake";
 #define MAIN_LOOP_DELAY_MS 10
 #define MAX_LOG_LINES 150 // Number of most-recent log lines visible in the HTML log.
 #define MAX_LOG_LINE_LENGTH 190 // Max length a single timestamped log line can be.
+#define DATA_MINIMUM_COUNT 35 // Must get this many packets from the puck to be considered "on" (issue #3).
 
 // The 2026 Steam Controller USB puck has five "interfaces" (low level
 // communication endpoints) that it exposes to the USB system that speaks to
@@ -317,7 +318,7 @@ static void hid_transfer_cb(usb_transfer_t *transfer)
         // be the first data packet. Don't actually do anything at first.
         lastControllerDataReceived= millis();
         lastControllerDataReceivedCount = 0;
-        logMessage("GitHub Issue #1 Bugfix: Early data packet received, taking no action yet.");
+        logMessage("Early data packet received, taking no action yet.");
       }
       else
       {
@@ -325,12 +326,12 @@ static void hid_transfer_cb(usb_transfer_t *transfer)
         // then consider this to be part of a longer stream of data rather than
         // a one-time puck connection. Still, wait for more than just a single
         // data packet, or else the bug still reproduces. We have to wait for a
-        // few of these packets to come through before counting this as the
+        // number of these packets to come through before counting this as the
         // controller actually being "on".
         lastControllerDataReceived= millis();
-        if (lastControllerDataReceivedCount < 5)
+        if (lastControllerDataReceivedCount < DATA_MINIMUM_COUNT)
         {
-          logMessage("GitHub Issue #1 Bugfix: Early data packet received, waiting for more data.");
+          logMessage("Early data packet received, waiting for more data.");
         }
         else
         {
