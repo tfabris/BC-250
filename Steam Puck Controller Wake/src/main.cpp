@@ -183,6 +183,10 @@ void logVerbose(const String &text)
 // ============================================================================
 // Logs the status of the Select and Power Sense GPIO pins and flags if either
 // one has changed recently (three asterisks).
+//
+// By default, only outputs the log if the state of the sense or select pins
+// has changed. If you set the "force" parameter to "true" then it will always
+// log the output regardless of whether the states have changed.
 // ============================================================================
 void logPinStatus(bool force = false)
 {
@@ -246,7 +250,7 @@ void logDiagnostics()
   // Note that this is the temp of the ESP32 chip, not the temp of the BC-250.
   float chipTempCelsius = temperatureRead();
 
-  // Log the GPIO pin status of the select and sense pins.
+  // Obtain the GPIO pin status of the select and sense pins.
   selectPinReadState = digitalRead(SELECT_PIN);
   sensePinReadState = digitalRead(POWER_SENSE_PIN);
 
@@ -801,21 +805,35 @@ void setup()
 {
   logMessage("System Startup.");
 
-  // I have been told to try setting these output pins to low BEFORE running
-  // PinMode, as an attempt to prevent brief spikes to high when first powering
-  // on. Not sure if this is truly needed or not.
-
-  // Switch Multiplexer into Monitoring state at startup.
-  digitalWrite(SELECT_PIN, LOW);
-
-  // The Power On Pulse pin should be "off" at startup.
-  digitalWrite(POWER_ON_PULSE_PIN, LOW);
-
-  // Prepare GPIO pins, starting with the heartbeat LED.
-  pinMode(ONBOARD_LED,             OUTPUT);
-  pinMode(SELECT_PIN,              OUTPUT);
-  pinMode(POWER_ON_PULSE_PIN,      OUTPUT);
+  // Manage the state of the SELECT_PIN at startup. Sometimes I will reboot the
+  // ESP32 in software with an ESP.restart() and I am trying to ensure that the
+  // SELECT_PIN retains its state through restarts (see issue #5). Start by
+  // reading the state of the power sense pin early so that we can decide if we
+  // want the multiplexer to start up in runtime mode or in monitor mode.
   pinMode(POWER_SENSE_PIN, INPUT_PULLDOWN);
+  sensePinReadState = digitalRead(POWER_SENSE_PIN);
+  if (sensePinReadState == HIGH)
+  {
+    logMessage("System was already on at startup, setting to Runtime mode.");
+    digitalWrite(SELECT_PIN, HIGH); // Deliberately setting pin state before pinMode.
+  }
+  else
+  {
+    logMessage("System was off at startup, setting to Monitor mode.");
+    digitalWrite(SELECT_PIN, LOW); // Deliberately setting pin state before pinMode.
+  }
+
+  // With the desired state set, configure PinMode to enable it.
+  pinMode(SELECT_PIN, OUTPUT);
+
+  // The Power On Pulse pin should be "off" at startup. Deliberately setting the
+  // pin state before running PinMode, to prevent brief spikes to the wrong
+  // state when first powering on.
+  digitalWrite(POWER_ON_PULSE_PIN, LOW);
+  pinMode(POWER_ON_PULSE_PIN, OUTPUT);
+
+  // Prepare the heartbeat LED.
+  pinMode(ONBOARD_LED, OUTPUT);
 
   // Register the OTA Update functions.
   ArduinoOTA.onStart(onOtaStart);
@@ -850,7 +868,7 @@ void loop()
   if (shouldReboot)
   {
     logMessage("******************************************************************************");
-    logMessage("******************************* REBOOT IMMINENT ******************************");
+    logMessage("******************************* REBOOTING ESP32 ******************************");
     logMessage("******************************************************************************");
     delay(3000);
     ESP.restart();
