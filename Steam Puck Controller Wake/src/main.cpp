@@ -114,6 +114,11 @@ unsigned long lastControllerDataReceivedCount = 0;
 unsigned long lastControllerDataLogTime = 0;
 unsigned long lastDiagTime = 0;
 const unsigned long diagInterval = 2 * 60 * 1000;
+unsigned long lastWatchdogTime = 0;
+unsigned long lostWiFiAt = 0;
+const unsigned long watchdogTimeout = 15 * 60 * 1000;
+const unsigned long watchdogLogInterval = 20 * 1000;
+
 
 // ============================================================================
 // LOGGING SYSTEM
@@ -672,11 +677,7 @@ void handle_pulse_request(AsyncWebServerRequest *request)
 // ============================================================================
 void setup_networking()
 {
-  // Attempted bugfixes for GitHub issue #2. Try to add additional commands
-  // which hopefully might help it stay connected to WiFi more stably. If these
-  // do not fix the problem, implement a watchdog in the main loop which
-  // monitors WiFi.status() != WL_CONNECTED and attempts a more serious
-  // reconnect.
+  // These commands hopefully help it stay connected to WiFi more stably.
   WiFi.mode(WIFI_STA);
   WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE);
   WiFi.setHostname(WIFI_HOSTNAME);
@@ -692,9 +693,6 @@ void setup_networking()
   // and/or reconnect. Blink the LED faster while it is still trying to connect
   // to WiFi. This way, while looking at the board, I can see how quickly it
   // connects to WiFi without having to look at the log file in the browser.
-  // TODO: if I ever implement a WiFi watchdog, make this part of the watchdog
-  // instead of blocking the startup (simply blink the LED faster whenever the
-  // WiFi is not connected).
   int timeout = 0;
   while (WiFi.status() != WL_CONNECTED && timeout < 75)
   {
@@ -797,6 +795,73 @@ void onOtaError(ota_error_t error)
   else if (error == OTA_END_ERROR) logMessage("End Failed");
 }
 
+
+// ============================================================================
+// Ensure the ESP32 is connected to WiFi, and reboot the ESP32 if it's not.
+// This is intended to fix GitHub issue #2.
+//
+// Don't reboot instantly, wait a while before doing so, to prevent constant
+// fast reboot loops. Control this time interval with watchdogTimeout at the
+// top of the file.
+//
+// Call this function from your main program loop().
+// ============================================================================
+void WiFiWatchdog()
+{
+  unsigned long currentMillis = millis();
+
+  // Check if we are connected to WiFi or not.
+  if (WiFi.status() == WL_CONNECTED)
+  {
+    // If we are connected to Wifi, but we were previously disconnected, log it.
+    if (lostWiFiAt > 0)
+    {
+      logMessage("WiFi Watchdog: Connected to Wifi.");
+    }
+
+    // Since we are connected, everything is OK. Make sure to reset the counters.
+    lastWatchdogTime = 0;
+    lostWiFiAt = 0;
+  }
+  else
+  {
+    // Blink the onboard LED faster if WiFi is not connected.
+    analogWrite(ONBOARD_LED, ONBOARD_LED_BRIGHTNESS);
+    ledIsOn = true; 
+    delay(100);
+    analogWrite(ONBOARD_LED, 0);
+    ledIsOn = false; 
+    delay(100);
+
+    // Record the first moment that we noticed we had lost Wifi.
+    if (lostWiFiAt == 0)
+    {
+      lostWiFiAt = currentMillis;
+    }
+
+    // Log the fact that we lost WiFi, but only at timed intervals, to prevent
+    // flooding the log.
+    if (lastWatchdogTime > 0 && currentMillis - lastWatchdogTime < watchdogLogInterval) { return; }
+    lastWatchdogTime = currentMillis;
+    logMessage("WiFi Watchdog: Not connected to Wifi.");
+
+    // If we've been disconnected from WiFi long enough, then reboot the ESP32.
+    if (currentMillis - lostWiFiAt < watchdogTimeout) { return; }
+    logMessage( "******************** WiFi Watchdog: Rebooting ESP32 ********************");
+    ESP.restart();
+
+    // Reset these two variables after the reboot message. These are for
+    // debugging purposes only. Normally these lines will not be hit at all,
+    // because the system will reboot before it hits them. But if I have
+    // commented out the actual reboot, for debugging and testing purposes,
+    // then I need these reset if we are in the situation where it WOULD have
+    // rebooted.
+    lastWatchdogTime = 0;
+    lostWiFiAt = 0;
+  }
+}
+
+
 // ============================================================================
 // MAIN PROGRAM CODE - SETUP
 // This code is called once when the ESP32 boots up.
@@ -865,11 +930,13 @@ void loop()
     }
   }
 
+  // Call the WiFi Watchdog function to ensure the ESP32 gets rebooted if it's
+  // lost WiFi for a long time and can't seem to get reconnected on its own.
+  WiFiWatchdog();
+
   if (shouldReboot)
   {
-    logMessage("******************************************************************************");
     logMessage("******************************* REBOOTING ESP32 ******************************");
-    logMessage("******************************************************************************");
     delay(3000);
     ESP.restart();
   }  
