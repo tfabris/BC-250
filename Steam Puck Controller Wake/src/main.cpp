@@ -317,8 +317,8 @@ static void hid_transfer_cb(usb_transfer_t *transfer)
     if (sensePinReadState == LOW && selectPinReadState == LOW && timeToWait < 1)
     {
       // Bugfix for GitHub Issue #1: Ensure that the data is a continuous stream
-      // by checking the last time that data was received, and now many packets
-      // we got recently. Only do stuff if a few recent data packets were
+      // by checking the last time that data was received, and how many packets
+      // we got recently. Only do stuff if a number of recent data packets were
       // received.
       lastControllerDataReceivedCount ++;
       if (millis() - lastControllerDataReceived >= 100)
@@ -345,9 +345,6 @@ static void hid_transfer_cb(usb_transfer_t *transfer)
         else
         {
           logMessage("Enough data has been received: Pulsing power on line.");
-          digitalWrite(POWER_ON_PULSE_PIN, HIGH);
-          delay(500);
-          digitalWrite(POWER_ON_PULSE_PIN, LOW);
 
           // When first booting the machine, there must be a long pause after
           // the initial boot before switching the multiplexer into runtime
@@ -358,27 +355,16 @@ static void hid_transfer_cb(usb_transfer_t *transfer)
           // monitor mode while we wait for the OS to boot.
           logMessage("Waiting to switch USB to Runtime mode.");
           timeToWait = 15000;
+
+          // Must pulse the power-on line AFTER setting the timeToWait variable
+          // because if we don't, the main loop will trigger while we're in the
+          // middle of pulsing the power-on line and we'll get a premature
+          // switch to runtime mode.
+          digitalWrite(POWER_ON_PULSE_PIN, HIGH);
+          delay(500);
+          digitalWrite(POWER_ON_PULSE_PIN, LOW);
         }
       }
-    }
-
-    // ========================================================================
-    // POWER ON
-    // ========================================================================
-    // If the machine's power is on, and there was data found, but the
-    // machine is still in monitoring mode, then flip the multiplexer into
-    // runtime mode without touching the power-on button. By separating
-    // this into its own section separate from the actual triggering of the
-    // power button, this covers switching into runtime mode both in the
-    // controller wake situation, and also the situation where the machine
-    // was turned on independently from the controller.
-    selectPinReadState = digitalRead(SELECT_PIN);
-    sensePinReadState = digitalRead(POWER_SENSE_PIN);
-    if (sensePinReadState == HIGH && selectPinReadState == LOW && timeToWait < 1)
-    {
-      logMessage("Power is on, switching USB to Runtime mode.");
-      digitalWrite(SELECT_PIN, HIGH);
-      delay(100);
     }
 
     // Resubmit the stream: Put this specific transfer handle back into the pool
@@ -993,12 +979,33 @@ void loop()
     {
       logMessage("Switching USB to Monitor mode.");
       digitalWrite(SELECT_PIN, LOW);
+      timeToWait = 100; // Ensure that we don't toggle this pin too rapidly.
     }
     else
     {
       logMessage("Monitor mode canceled.");
     }
   }
+
+  // ========================================================================
+  // RUNTIME MODE
+  // ========================================================================
+  // If the machine's power is on, but the machine is still in monitoring mode,
+  // then flip the multiplexer into runtime mode without touching the power-on
+  // button. By separating this into its own section, separate from the actual
+  // triggering of the power button, this covers switching into runtime mode
+  // both in the controller wake situation, and also the situation where the
+  // machine was turned on independently from the controller. Also, I am fixing
+  // issue #6 by moving this into the main loop rather than inside the
+  // controller data received function.
+  selectPinReadState = digitalRead(SELECT_PIN);
+  sensePinReadState = digitalRead(POWER_SENSE_PIN);
+  if (sensePinReadState == HIGH && selectPinReadState == LOW && timeToWait < 1)
+  {
+    logMessage("Power is on, switching USB to Runtime mode.");
+    digitalWrite(SELECT_PIN, HIGH);
+    timeToWait = 100; // Ensure that we don't toggle this pin too rapidly.
+  }  
 
   // Log RAM diagnostics (at timed intervals) to help diagnose memory leaks.
   logDiagnostics();  
