@@ -910,7 +910,7 @@ void loop()
   if (timeToWait > 0)
   {
     timeToWait -= MAIN_LOOP_DELAY_MS;
-    if (timeToWait % 1000 == 0)
+    if (timeToWait % 1000 == 0 && timeToWait > 0)
     {
       logMessage("Time to Wait: " + String(timeToWait));
     }
