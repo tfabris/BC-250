@@ -204,7 +204,7 @@ The BC-250 will automatically throttle the GPU if it gets hotter than 85°c. It 
 
 ### RAM Cooling
 
-The back side of the BC-250's board contains its RAM chips underneath a flat aluminum plate. To ensure that the RAM stays cool, I have used thermal adhesive to attach a large heat sink to that area of the aluminum plate. Note that before gluing the heat sink into place, I drilled holes in the heat sink where it would have covered up access to the mounting screws. It's important not to lose access to those screws.
+The back side of the BC-250's board contains its RAM chips underneath a flat aluminum plate. To ensure that the RAM stays cool, I have used [thermal adhesive](https://www.newegg.com/alphacool-1020421/p/37B-0003-00837) to attach a large heat sink to that area of the aluminum plate. Note that before gluing the heat sink into place, I drilled holes in the heat sink where it would have covered up access to the mounting screws. It's important not to lose access to those screws.
 
   | ![](Photos/BC-250%20With%20Heatsink.jpg) |
   |:----------------------------------------:|
